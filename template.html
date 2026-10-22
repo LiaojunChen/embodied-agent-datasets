@@ -116,6 +116,25 @@ tbody tr:hover { background: var(--surface-2); }
 #tip b { font-weight: 600; }
 footer { margin-top: 48px; color: var(--text-muted); font-size: 12px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.exbtn { font: inherit; font-size: 12px; color: var(--accent-ink); background: transparent; border: 1px solid var(--border);
+  border-radius: 6px; padding: 1px 8px; margin-top: 6px; cursor: pointer; }
+.exbtn:hover { background: var(--surface-2); }
+.exbtn[aria-expanded="true"] { background: var(--surface-2); color: var(--text-primary); }
+tr.exrow > td { background: var(--page); padding: 12px 16px 16px; }
+tr.exrow:hover { background: transparent; }
+.exhead { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
+.kind { font-size: 11px; font-weight: 600; border-radius: 4px; padding: 1px 6px; border: 1px solid var(--axis); color: var(--text-primary); }
+.kind.real::before { content: "✓ "; }
+.kind.ill { border-style: dashed; color: var(--text-secondary); }
+.kind.ill::before { content: "◇ "; }
+.eximgs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.eximgs img { height: 120px; width: auto; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-2); }
+pre.json { margin: 0; max-height: 420px; overflow: auto; background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 12px; font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre-wrap; word-break: break-word; }
+pre.json .k { color: var(--accent-ink); }
+pre.json .s { color: var(--text-primary); }
+pre.json .n { color: var(--text-secondary); font-weight: 600; }
+pre.json .o { color: var(--text-muted); font-style: italic; }
 @media (max-width: 720px) { .wrap { padding: 20px 14px 48px; } header h1 { font-size: 21px; } .count { margin-left: 0; } }
 @media (forced-colors: active) { .bar i, .stack .seg { forced-color-adjust: none; } }
 </style>
@@ -139,12 +158,13 @@ footer { margin-top: 48px; color: var(--text-muted); font-size: 12px; }
 
 <section id="datasets">
   <h2>数据集清单</h2>
-  <p class="sub">点击表头排序。一个条目包含多个 HF 仓库时，统计为各仓库之和。条长按对数刻度绘制（下载从 100 起、like 从 1 起），便于同时看清几百和几百万的量级。悬停可看各仓库明细。</p>
+  <p class="sub">点击表头排序。一个条目包含多个 HF 仓库时，统计为各仓库之和。条长按对数刻度绘制（下载从 100 起、like 从 1 起），便于同时看清几百和几百万的量级。悬停可看各仓库明细。点“查看示例”展开一条数据：标“真实样例”的直接取自 HF 仓库，标“格式示意”的是 gated 或仅有论文、读不到原始数据的条目，按 card / 论文整理。</p>
   <div class="card">
     <div class="filters" role="group" aria-label="筛选">
       <input type="search" id="q" placeholder="搜索名称、HF ID、能力…" aria-label="搜索">
       <div id="cats" style="display:flex;flex-wrap:wrap;gap:6px"></div>
       <label>阶段 <select id="stage"><option value="">全部</option><option>S0</option><option>S1</option><option>S2</option><option>S3</option></select></label>
+      <button class="btn" type="button" id="expandAll" style="padding:3px 10px;font-size:13px">全部展开示例</button>
       <span class="count" id="count"></span>
     </div>
     <div class="tablewrap">
@@ -218,6 +238,7 @@ const nGated = D.datasets.filter(d => d.agg && d.agg.gated).length;
 $('#tiles').innerHTML = [
   ['数据集条目', D.datasets.length], ['Hugging Face 仓库', hfIds.length],
   ['覆盖类别', D.categories.length], ['需申请访问（gated）', nGated],
+  ['真实样例 / 格式示意', `${D.datasets.filter(d => d.sample && d.sample.kind !== 'illustrative').length} / ${D.datasets.filter(d => d.sample && d.sample.kind === 'illustrative').length}`],
 ].map(([l, v]) => `<div class="tile"><div class="label">${l}</div><div class="value">${v}</div></div>`).join('');
 
 const state = {q: '', cat: '', stage: '', key: 'downloadsAllTime', dir: -1};
@@ -249,6 +270,40 @@ function metricCell(d, k) {
     <div class="num"><span>${fmt(v)}</span>${d.hf.length > 1 ? `<small>${d.hf.length} 仓库</small>` : ''}</div>
     <div class="bar ${cls}" aria-hidden="true"><i style="width:${logW(v, k)}%"></i></div></td>`;
 }
+// Sample panel: syntax-highlighted JSON, built from escaped text only
+function hlJSON(v) {
+  const src = JSON.stringify(v, null, 2);
+  const re = /("(?:\\.|[^"\\])*")(\s*:)?|\b(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|true|false|null)\b/g;
+  let out = '', last = 0, m;
+  while ((m = re.exec(src))) {
+    out += esc(src.slice(last, m.index));
+    if (m[1]) {
+      const cls = m[2] ? 'k' : (m[1].startsWith('"…（') ? 'o' : 's');
+      out += `<span class="${cls}">${esc(m[1])}</span>${m[2] || ''}`;
+    } else out += `<span class="n">${m[3]}</span>`;
+    last = re.lastIndex;
+  }
+  return out + esc(src.slice(last));
+}
+function samplePanel(d) {
+  const s = d.sample;
+  if (!s) return '<span class="na">暂无示例</span>';
+  const real = s.kind !== 'illustrative';
+  const how = {viewer: 'HF Dataset Viewer 第一行', file: '仓库原始文件'}[s.kind] || '';
+  const head = real
+    ? `<span class="kind real">真实样例</span><span>${esc(how)}：${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.source)}</a>` : esc(s.source)}</span>`
+    : `<span class="kind ill">格式示意（非原始数据）</span><span>${esc(s.source)}</span>`;
+  const imgs = s.images.length ? `<div class="eximgs">${s.images.map((u, i) => `<img src="${esc(u)}" alt="${esc(d.name)} 样例图像 ${i + 1}" loading="lazy">`).join('')}</div>` : '';
+  return `<div class="exhead">${head}<span>· 长字段已截断，长列表保留首尾各 3 项</span></div>${imgs}<pre class="json" tabindex="0" aria-label="${esc(d.name)} 样例 JSON">${hlJSON(s.record)}</pre>`;
+}
+const open = new Set();
+$('#rows').addEventListener('click', e => {
+  const b = e.target.closest('.exbtn'); if (!b) return;
+  const n = b.dataset.name;
+  open.has(n) ? open.delete(n) : open.add(n);
+  renderRows();
+  document.querySelector(`.exbtn[data-name="${CSS.escape(n)}"]`)?.focus();
+});
 function renderRows() {
   const val = d => state.key === 'name' ? d.name.toLowerCase() : (d.agg ? d.agg[state.key] : -1);
   const list = D.datasets.filter(d =>
@@ -261,13 +316,22 @@ function renderRows() {
       <div class="cat">${esc(catName[d.cat])}</div>
       <div class="ids">${d.hf.map(h => `<a href="https://huggingface.co/datasets/${esc(h.id)}" target="_blank" rel="noopener">${esc(h.id)}</a>`).join('')}</div>
       ${d.links.length ? `<div class="links">${d.links.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join('')}</div>` : ''}
-      ${d.note ? `<div class="note">${esc(d.note)}</div>` : ''}</td>
+      ${d.note ? `<div class="note">${esc(d.note)}</div>` : ''}
+      ${d.sample ? `<button class="exbtn" type="button" data-name="${esc(d.name)}" aria-expanded="${open.has(d.name)}" aria-controls="ex-${esc(slug(d.name))}">${open.has(d.name) ? '收起示例' : '查看示例'}${d.sample.kind === 'illustrative' ? '（示意）' : ''}</button>` : ''}</td>
     <td style="min-width:140px">${esc(d.scale)}</td>
     <td style="min-width:160px">${esc(d.ability)}</td>
     <td style="white-space:nowrap">${d.stages.map(s => `<span class="stage">${s}</span>`).join('') || '<span class="na">—</span>'}</td>
     ${metricCell(d, 'downloads')}${metricCell(d, 'downloadsAllTime')}${metricCell(d, 'likes')}
-  </tr>`).join('') || `<tr><td colspan="7" class="na">没有匹配的数据集</td></tr>`;
+  </tr>${open.has(d.name) ? `<tr class="exrow" id="ex-${esc(slug(d.name))}"><td colspan="7">${samplePanel(d)}</td></tr>` : ''}`).join('')
+    || `<tr><td colspan="7" class="na">没有匹配的数据集</td></tr>`;
 }
+function slug(s) { let h = 0; for (const c of s) h = (h * 31 + c.codePointAt(0)) >>> 0; return h.toString(36); }
+$('#expandAll').addEventListener('click', e => {
+  const all = open.size < D.datasets.length;
+  D.datasets.forEach(d => all ? open.add(d.name) : open.delete(d.name));
+  e.target.textContent = all ? '全部收起' : '全部展开示例';
+  renderRows();
+});
 renderRows();
 
 // Stage mixes: one stacked bar per stage; slots assigned in fixed order within each stage

@@ -43,6 +43,8 @@ def fetch_all():
 
 
 def render(cache):
+    # samples.json is produced by sample.py and committed; thumbnails live in site/samples/
+    samples = json.loads((ROOT / "samples.json").read_text()) if (ROOT / "samples.json").exists() else {}
     rows = []
     for d in data.DATASETS:
         per = [dict(id=i, **(cache["stats"].get(i) or {})) for i in d["hf"]]
@@ -52,7 +54,7 @@ def render(cache):
             agg = dict(downloads=sum(p["downloads"] for p in known), downloadsAllTime=sum(p["downloadsAllTime"] for p in known),
                        likes=sum(p["likes"] for p in known), gated=any(p["gated"] for p in known))
         rows.append(dict(cat=d["cat"], name=d["name"], hf=per, links=d["links"], scale=d["scale"], ability=d["ability"],
-                         stages=d["stages"], note=d.get("note", ""), agg=agg))
+                         stages=d["stages"], note=d.get("note", ""), agg=agg, sample=samples.get(d["name"])))
     payload = dict(fetchedAt=cache["fetchedAt"], categories=data.CATEGORIES, datasets=rows,
                    stages=data.STAGES, evals=data.EVALS)
     tpl = (ROOT / "template.html").read_text()
