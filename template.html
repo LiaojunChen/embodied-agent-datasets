@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>具身 Agent 训练数据集调研与配比建议</title>
+<meta name="description" content="具身智能体 agentic 能力训练数据集清单：Hugging Face 下载量、like 数与分阶段配比建议">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface-1: #fcfcfb; --surface-2: #f3f2ef;
+  --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #6b6a65;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --accent: #2a78d6; --accent-ink: #1c5cab;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4; --s6: #008300; --s7: #4a3aa7; --s8: #e34948;
+  --track: #e8e7e2;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface-1: #1a1a19; --surface-2: #232321;
+    --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #9a9890;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --accent: #3987e5; --accent-ink: #86b6ef;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767;
+    --track: #2c2c2a;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface-1: #1a1a19; --surface-2: #232321;
+  --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #9a9890;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --accent: #3987e5; --accent-ink: #86b6ef;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767;
+  --track: #2c2c2a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--text-primary);
+  font: 14px/1.55 system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+a { color: var(--accent-ink); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 32px 24px 64px; }
+header h1 { font-size: 26px; margin: 0 0 6px; font-weight: 650; }
+header p { margin: 0; color: var(--text-secondary); max-width: 860px; }
+.topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.btn { font: inherit; color: var(--text-primary); background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+.btn:hover { background: var(--surface-2); }
+nav.toc { display: flex; gap: 16px; margin: 20px 0 0; flex-wrap: wrap; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 24px 0 8px; }
+.tile { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+.tile .label { color: var(--text-secondary); font-size: 13px; }
+.tile .value { font-size: 26px; font-weight: 600; margin-top: 2px; }
+section { margin-top: 40px; }
+section h2 { font-size: 19px; margin: 0 0 4px; font-weight: 650; }
+section > .sub { color: var(--text-secondary); margin: 0 0 16px; }
+.card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--grid); }
+.filters input[type=search] { font: inherit; color: var(--text-primary); background: var(--page); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 10px; min-width: 220px; }
+.chip { font: inherit; font-size: 13px; color: var(--text-secondary); background: transparent; border: 1px solid var(--border);
+  border-radius: 999px; padding: 3px 10px; cursor: pointer; }
+.chip[aria-pressed="true"] { color: var(--text-primary); background: var(--surface-2); border-color: var(--axis); font-weight: 600; }
+.filters label { color: var(--text-secondary); font-size: 13px; display: inline-flex; gap: 6px; align-items: center; }
+.filters select { font: inherit; color: var(--text-primary); background: var(--page); border: 1px solid var(--border); border-radius: 8px; padding: 4px 8px; }
+.count { margin-left: auto; color: var(--text-muted); font-size: 13px; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { font-size: 12px; font-weight: 600; color: var(--text-secondary); white-space: nowrap; position: sticky; top: 0; background: var(--surface-1); }
+th button { all: unset; cursor: pointer; }
+th button:focus-visible { outline: 2px solid var(--accent); }
+th[aria-sort] button::after { content: " ↕"; color: var(--text-muted); }
+th[aria-sort="descending"] button::after { content: " ↓"; color: var(--text-primary); }
+th[aria-sort="ascending"] button::after { content: " ↑"; color: var(--text-primary); }
+tbody tr:hover { background: var(--surface-2); }
+.name { font-weight: 600; }
+.cat { font-size: 12px; color: var(--text-muted); }
+.ids { margin-top: 4px; display: flex; flex-direction: column; gap: 2px; }
+.ids a, .ids span { font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; word-break: break-all; }
+.links { margin-top: 4px; font-size: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+.note { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.stage { display: inline-block; font-size: 11px; font-weight: 600; color: var(--text-secondary); border: 1px solid var(--axis);
+  border-radius: 4px; padding: 0 5px; margin: 0 4px 4px 0; }
+.badge { display: inline-block; font-size: 11px; color: var(--text-secondary); background: var(--surface-2); border-radius: 4px; padding: 0 5px; margin-left: 6px; }
+.metric { min-width: 150px; font-variant-numeric: tabular-nums; }
+.metric .num { display: flex; justify-content: space-between; gap: 8px; }
+.metric .num small { color: var(--text-muted); }
+.bar { height: 8px; background: var(--track); border-radius: 4px; margin-top: 5px; position: relative; }
+.bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; }
+.bar.dl i { background: var(--s1); }
+.bar.lk i { background: var(--s2); }
+.na { color: var(--text-muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--text-secondary); }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.stages { display: grid; gap: 12px; }
+.stagecard { padding: 16px 18px; }
+.stagecard h3 { margin: 0; font-size: 15px; font-weight: 650; }
+.stagecard .meta { color: var(--text-secondary); font-size: 13px; margin: 2px 0 12px; }
+.stack { display: flex; gap: 2px; height: 24px; margin-bottom: 10px; }
+.stack .seg { height: 100%; position: relative; cursor: default; }
+.stack .seg:first-child { border-radius: 4px 0 0 4px; }
+.stack .seg:last-child { border-radius: 0 4px 4px 0; }
+.stack .seg span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; color: #fff; white-space: nowrap; }
+.stack .seg.light span { color: #0b0b0b; }
+.evals { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.evals .card { padding: 14px 16px; }
+.evals h3 { margin: 0 0 4px; font-size: 14px; }
+.evals p { margin: 0; color: var(--text-secondary); }
+#tip { position: fixed; pointer-events: none; z-index: 10; background: var(--surface-1); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-size: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  display: none; max-width: 320px; }
+#tip b { font-weight: 600; }
+footer { margin-top: 48px; color: var(--text-muted); font-size: 12px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (max-width: 720px) { .wrap { padding: 20px 14px 48px; } header h1 { font-size: 21px; } .count { margin-left: 0; } }
+@media (forced-colors: active) { .bar i, .stack .seg { forced-color-adjust: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="topbar">
+    <div>
+      <h1>具身 Agent 训练数据集调研与配比建议</h1>
+      <p>目标：训练对标 GPT-6-Astra 的具身智能体，重点提升 agentic 能力（工具调用、多轮尝试、失败分析与恢复）。下载量和 like 数来自 Hugging Face Hub API，统计时间 <span id="fetched"></span>。</p>
+    </div>
+    <button class="btn" id="theme" type="button" aria-label="切换深色/浅色主题">切换主题</button>
+  </div>
+  <nav class="toc" aria-label="目录">
+    <a href="#datasets">数据集清单</a><a href="#mix">训练配比</a><a href="#evals">评测对照</a><a href="#notes">口径说明</a>
+  </nav>
+</header>
+
+<div class="tiles" id="tiles"></div>
+
+<section id="datasets">
+  <h2>数据集清单</h2>
+  <p class="sub">点击表头排序。一个条目包含多个 HF 仓库时，统计为各仓库之和。条长按对数刻度绘制（下载从 100 起、like 从 1 起），便于同时看清几百和几百万的量级。悬停可看各仓库明细。</p>
+  <div class="card">
+    <div class="filters" role="group" aria-label="筛选">
+      <input type="search" id="q" placeholder="搜索名称、HF ID、能力…" aria-label="搜索">
+      <div id="cats" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+      <label>阶段 <select id="stage"><option value="">全部</option><option>S0</option><option>S1</option><option>S2</option><option>S3</option></select></label>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th scope="col"><button data-k="name">数据集</button></th>
+          <th scope="col">规模</th>
+          <th scope="col">主要能力</th>
+          <th scope="col">阶段</th>
+          <th scope="col" aria-sort="none"><button data-k="downloads">近 30 天下载</button></th>
+          <th scope="col" aria-sort="descending"><button data-k="downloadsAllTime">累计下载</button></th>
+          <th scope="col" aria-sort="none"><button data-k="likes">Likes</button></th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="mix">
+  <h2>训练配比建议</h2>
+  <p class="sub">按 token 数计算比例（S3 按 rollout 数）。这是经验起点，需要用消融实验校准。</p>
+  <div class="stages" id="stages"></div>
+</section>
+
+<section id="evals">
+  <h2>评测对照</h2>
+  <p class="sub">训练数据需与这些评测集去重。</p>
+  <div class="evals" id="evallist"></div>
+</section>
+
+<section id="notes">
+  <h2>口径说明</h2>
+  <div class="card" style="padding:14px 18px;color:var(--text-secondary)">
+    <ul style="margin:0;padding-left:18px">
+      <li>下载量是 HF 统计的请求次数，会被 CI、镜像和重复拉取放大，只能作为使用度的粗略参考，不等于独立用户数。</li>
+      <li>“近 30 天下载”反映当前热度，“累计下载”反映历史使用面；新发布的数据集累计值天然偏低。</li>
+      <li>标注“社区镜像 / 转换版”的条目，统计反映的是该镜像而非官方数据，官方原始数据见对应链接。</li>
+      <li>没有 HF 仓库的条目（只有论文或 GitHub）不显示统计值。</li>
+      <li>gated 数据集需要在 HF 页面申请访问；商用前请逐一审查许可证。</li>
+    </ul>
+  </div>
+</section>
+
+<footer>数据来源：Hugging Face Hub API · 统计时间 <span id="fetched2"></span> · 由 build.py 生成</footer>
+</div>
+<div id="tip" role="tooltip"></div>
+<script id="payload" type="application/json">/*__DATA__*/null</script>
+<script>
+const D = JSON.parse(document.getElementById('payload').textContent);
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const catName = Object.fromEntries(D.categories);
+const METRICS = {downloads: '近 30 天下载', downloadsAllTime: '累计下载', likes: 'Likes'};
+function fmt(n) {
+  if (n == null) return '—';
+  if (n >= 1e8) return (n / 1e8).toFixed(1).replace(/\.0$/, '') + ' 亿';
+  if (n >= 1e4) return (n / 1e4).toFixed(n >= 1e5 ? 0 : 1).replace(/\.0$/, '') + ' 万';
+  return n.toLocaleString('en-US');
+}
+// log scale shared across the full list so bars stay put when filtering
+const maxOf = k => Math.max(1, ...D.datasets.filter(d => d.agg).map(d => d.agg[k]));
+const MAX = Object.fromEntries(Object.keys(METRICS).map(k => [k, maxOf(k)]));
+// log axis starts at a floor (100 downloads / 1 like) instead of 0, so mid-range differences stay visible
+const FLOOR = {downloads: 100, downloadsAllTime: 100, likes: 1};
+const logW = (v, k) => v > 0 ? Math.max(2, Math.min(100, (Math.log10(Math.max(v, FLOOR[k])) - Math.log10(FLOOR[k])) / (Math.log10(MAX[k]) - Math.log10(FLOOR[k])) * 98 + 2)) : 0;
+
+$('#fetched').textContent = $('#fetched2').textContent = D.fetchedAt;
+const hfIds = D.datasets.flatMap(d => d.hf);
+const nGated = D.datasets.filter(d => d.agg && d.agg.gated).length;
+$('#tiles').innerHTML = [
+  ['数据集条目', D.datasets.length], ['Hugging Face 仓库', hfIds.length],
+  ['覆盖类别', D.categories.length], ['需申请访问（gated）', nGated],
+].map(([l, v]) => `<div class="tile"><div class="label">${l}</div><div class="value">${v}</div></div>`).join('');
+
+const state = {q: '', cat: '', stage: '', key: 'downloadsAllTime', dir: -1};
+$('#cats').innerHTML = [['', '全部']].concat(D.categories)
+  .map(([id, n]) => `<button class="chip" type="button" data-cat="${id}" aria-pressed="${id === ''}">${esc(n)}</button>`).join('');
+$('#cats').addEventListener('click', e => {
+  const b = e.target.closest('[data-cat]'); if (!b) return;
+  state.cat = b.dataset.cat;
+  document.querySelectorAll('#cats .chip').forEach(c => c.setAttribute('aria-pressed', c === b));
+  renderRows();
+});
+$('#q').addEventListener('input', e => { state.q = e.target.value.trim().toLowerCase(); renderRows(); });
+$('#stage').addEventListener('change', e => { state.stage = e.target.value; renderRows(); });
+document.querySelectorAll('th button').forEach(b => b.addEventListener('click', () => {
+  const k = b.dataset.k;
+  state.dir = state.key === k ? -state.dir : (k === 'name' ? 1 : -1);
+  state.key = k;
+  document.querySelectorAll('th button').forEach(o => {
+    const th = o.parentElement;
+    th.setAttribute('aria-sort', o === b ? (state.dir > 0 ? 'ascending' : 'descending') : 'none');
+  });
+  renderRows();
+}));
+function metricCell(d, k) {
+  if (!d.agg) return `<td class="metric"><span class="na">—</span></td>`;
+  const v = d.agg[k], cls = k === 'likes' ? 'lk' : 'dl';
+  const parts = d.hf.length > 1 ? d.hf.map(h => `${h.id}: ${fmt(h[k])}`).join('\n') : '';
+  return `<td class="metric" data-tip="${esc(`${d.name} · ${METRICS[k]} ${(v ?? 0).toLocaleString('en-US')}` + (parts ? '\n' + parts : ''))}">
+    <div class="num"><span>${fmt(v)}</span>${d.hf.length > 1 ? `<small>${d.hf.length} 仓库</small>` : ''}</div>
+    <div class="bar ${cls}" aria-hidden="true"><i style="width:${logW(v, k)}%"></i></div></td>`;
+}
+function renderRows() {
+  const val = d => state.key === 'name' ? d.name.toLowerCase() : (d.agg ? d.agg[state.key] : -1);
+  const list = D.datasets.filter(d =>
+    (!state.cat || d.cat === state.cat) && (!state.stage || d.stages.includes(state.stage)) &&
+    (!state.q || [d.name, d.ability, d.scale, d.note, ...d.hf.map(h => h.id)].join(' ').toLowerCase().includes(state.q))
+  ).sort((a, b) => { const x = val(a), y = val(b); return (x > y ? 1 : x < y ? -1 : 0) * state.dir; });
+  $('#count').textContent = `显示 ${list.length} / ${D.datasets.length}`;
+  $('#rows').innerHTML = list.map(d => `<tr>
+    <td style="min-width:240px"><div class="name">${esc(d.name)}${d.agg && d.agg.gated ? '<span class="badge">gated</span>' : ''}</div>
+      <div class="cat">${esc(catName[d.cat])}</div>
+      <div class="ids">${d.hf.map(h => `<a href="https://huggingface.co/datasets/${esc(h.id)}" target="_blank" rel="noopener">${esc(h.id)}</a>`).join('')}</div>
+      ${d.links.length ? `<div class="links">${d.links.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join('')}</div>` : ''}
+      ${d.note ? `<div class="note">${esc(d.note)}</div>` : ''}</td>
+    <td style="min-width:140px">${esc(d.scale)}</td>
+    <td style="min-width:160px">${esc(d.ability)}</td>
+    <td style="white-space:nowrap">${d.stages.map(s => `<span class="stage">${s}</span>`).join('') || '<span class="na">—</span>'}</td>
+    ${metricCell(d, 'downloads')}${metricCell(d, 'downloadsAllTime')}${metricCell(d, 'likes')}
+  </tr>`).join('') || `<tr><td colspan="7" class="na">没有匹配的数据集</td></tr>`;
+}
+renderRows();
+
+// Stage mixes: one stacked bar per stage; slots assigned in fixed order within each stage
+const SLOTS = ['--s1', '--s2', '--s3', '--s4', '--s5', '--s6', '--s7', '--s8'];
+const LIGHT_SLOTS = new Set(['--s3', '--s4', '--s5']); // dark ink inside these fills
+$('#stages').innerHTML = D.stages.map(st => {
+  const segs = st.mix.map(([n, p], i) => {
+    const s = SLOTS[i];
+    const lbl = p >= 8 ? `<span>${p}%</span>` : '';
+    return `<div class="seg${LIGHT_SLOTS.has(s) ? ' light' : ''}" style="flex:${p} 1 0;background:var(${s})" data-tip="${esc(`${st.id} · ${n}：${p}%`)}" tabindex="0" aria-label="${esc(`${n} ${p}%`)}">${lbl}</div>`;
+  }).join('');
+  const legend = st.mix.map(([n, p], i) => `<span><i class="sw" style="background:var(${SLOTS[i]})"></i>${esc(n)} ${p}%</span>`).join('');
+  return `<div class="card stagecard"><h3>${esc(st.title)}</h3><div class="meta">${esc(st.goal)} · ${esc(st.size)}</div>
+    <div class="stack" role="img" aria-label="${esc(st.title + ' 配比：' + st.mix.map(([n, p]) => n + ' ' + p + '%').join('，'))}">${segs}</div>
+    <div class="legend">${legend}</div></div>`;
+}).join('');
+
+$('#evallist').innerHTML = D.evals.map(([a, b]) => `<div class="card"><h3>${esc(a)}</h3><p>${esc(b)}</p></div>`).join('');
+
+// Shared hover/focus tooltip
+const tip = $('#tip');
+function showTip(el, x, y) {
+  tip.innerHTML = esc(el.dataset.tip).replace(/\n/g, '<br>').replace(/^([^·\n]+)/, '<b>$1</b>');
+  tip.style.display = 'block';
+  const r = tip.getBoundingClientRect();
+  tip.style.left = Math.min(x + 14, innerWidth - r.width - 8) + 'px';
+  tip.style.top = Math.min(y + 14, innerHeight - r.height - 8) + 'px';
+}
+document.addEventListener('mousemove', e => {
+  const el = e.target.closest('[data-tip]');
+  el ? showTip(el, e.clientX, e.clientY) : (tip.style.display = 'none');
+});
+document.addEventListener('focusin', e => {
+  const el = e.target.closest('[data-tip]'); if (!el) return;
+  const r = el.getBoundingClientRect(); showTip(el, r.left, r.bottom);
+});
+document.addEventListener('focusout', () => { tip.style.display = 'none'; });
+
+// Theme toggle (persisted)
+const saved = localStorage.getItem('theme');
+if (saved) document.documentElement.dataset.theme = saved;
+$('#theme').addEventListener('click', () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next; localStorage.setItem('theme', next);
+});
+</script>
+</body>
+</html>
