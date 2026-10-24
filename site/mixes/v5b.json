@@ -1,0 +1,807 @@
+{
+ "version": "v5b",
+ "name": "每方向 5B（35B）",
+ "desc": "七个方向各 5B，接近单方向大源的规模上限",
+ "total_tokens": 32161246441,
+ "token_definition": "text = Qwen3.8 tokens over trainable fields; vision = images x vtok.image + videos x vtok.video",
+ "directions": [
+  {
+   "dir": "A",
+   "budget": 5000000000,
+   "tokens": 5000000000,
+   "shortfall": 0,
+   "items": [
+    {
+     "entry": "spar-7m",
+     "name": "SPAR-7M",
+     "hf": [
+      "jasonzhango/SPAR-7M"
+     ],
+     "share": 0.0843,
+     "tokens": 3000000000,
+     "text_tokens": 278858113,
+     "vision_tokens": 2721141886,
+     "est_records": 1371438,
+     "sampling": "随机抽取该条目 8.4% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "jasonzhango/SPAR-7M": [
+       "spar-dataset-train\\.parquet"
+      ]
+     },
+     "n_files": 1
+    },
+    {
+     "entry": "os-atlas",
+     "name": "OS-Atlas grounding",
+     "hf": [
+      "OS-Copilot/OS-Atlas-data"
+     ],
+     "share": 0.602,
+     "tokens": 1750000000,
+     "text_tokens": 281244703,
+     "vision_tokens": 1468755296,
+     "est_records": 1394288,
+     "sampling": "随机抽取该条目 60.2% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "OS-Copilot/OS-Atlas-data": [
+       "(web|mobile|desktop)_domain/.*\\.json"
+      ]
+     },
+     "n_files": 10
+    },
+    {
+     "entry": "refspatial",
+     "name": "RefSpatial (RoboRefer)",
+     "hf": [
+      "JingkunAn/RefSpatial"
+     ],
+     "share": 0.0947,
+     "tokens": 250000000,
+     "text_tokens": 107981959,
+     "vision_tokens": 142018040,
+     "est_records": 245322,
+     "sampling": "随机抽取该条目 9.5% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "JingkunAn/RefSpatial": [
+       "(2D|3D)/.*\\.json",
+       "Simulator/metadata\\.json"
+      ]
+     },
+     "n_files": 8
+    }
+   ]
+  },
+  {
+   "dir": "B",
+   "budget": 5000000000,
+   "tokens": 2685482969,
+   "shortfall": 2314517031,
+   "items": [
+    {
+     "entry": "cosmos-understanding",
+     "name": "Cosmos-Reason1：视频理解",
+     "hf": [
+      "nvidia/Cosmos-Reason1-SFT-Dataset"
+     ],
+     "share": 1.0,
+     "tokens": 974492702,
+     "text_tokens": 181420254,
+     "vision_tokens": 793072448,
+     "est_records": 505786,
+     "sampling": "全量",
+     "file_patterns": {
+      "nvidia/Cosmos-Reason1-SFT-Dataset": [
+       ".*/.*_understanding\\.json"
+      ]
+     },
+     "n_files": 4
+    },
+    {
+     "entry": "eo-state",
+     "name": "EO-Data1.5M：完成判断 / 过程校验 / 片段描述",
+     "hf": [
+      "IPEC-COMMUNITY/EO-Data1.5M"
+     ],
+     "share": 1.0,
+     "tokens": 62773125,
+     "text_tokens": 12839775,
+     "vision_tokens": 49933350,
+     "est_records": 430512,
+     "sampling": "全量",
+     "file_patterns": {
+      "IPEC-COMMUNITY/EO-Data1.5M": [
+       "qa-(failure_detection|subtask_qa|process_verification|episode_caption)/.*\\.parquet"
+      ]
+     },
+     "n_files": 422
+    },
+    {
+     "entry": "robo2vlm",
+     "name": "Robo2VLM-1",
+     "hf": [
+      "keplerccc/Robo2VLM-1"
+     ],
+     "share": 1.0,
+     "tokens": 186728569,
+     "text_tokens": 34170919,
+     "vision_tokens": 152557650,
+     "est_records": 678034,
+     "sampling": "全量",
+     "file_patterns": {
+      "keplerccc/Robo2VLM-1": [
+       "data/train-.*\\.parquet"
+      ]
+     },
+     "n_files": 262
+    },
+    {
+     "entry": "sharerobot-state",
+     "name": "ShareRobot：历史与成功判断",
+     "hf": [
+      "BAAI/ShareRobot"
+     ],
+     "share": 1.0,
+     "tokens": 645549670,
+     "text_tokens": 23979980,
+     "vision_tokens": 621569690,
+     "est_records": 313311,
+     "sampling": "全量",
+     "file_patterns": {
+      "BAAI/ShareRobot": [
+       "planning/train/(past_description|success_\\((positive|negative)\\))_task\\.json"
+      ]
+     },
+     "n_files": 3
+    },
+    {
+     "entry": "robovqa",
+     "name": "RoboVQA",
+     "hf": [
+      "Tianli/robovqa"
+     ],
+     "share": 1.0,
+     "tokens": 409976299,
+     "text_tokens": 60676075,
+     "vision_tokens": 349300224,
+     "est_records": 222768,
+     "sampling": "全量",
+     "file_patterns": {
+      "Tianli/robovqa": [
+       "json/train/.*\\.json"
+      ]
+     },
+     "n_files": 160
+    },
+    {
+     "entry": "egoit",
+     "name": "EgoIT-99K",
+     "hf": [
+      "lmms-lab/EgoIT-99K"
+     ],
+     "share": 1.0,
+     "tokens": 293908890,
+     "text_tokens": 19712730,
+     "vision_tokens": 274196160,
+     "est_records": 198972,
+     "sampling": "全量",
+     "file_patterns": {
+      "lmms-lab/EgoIT-99K": [
+       "parquet/.*\\.parquet"
+      ]
+     },
+     "n_files": 10
+    },
+    {
+     "entry": "robofac",
+     "name": "RoboFAC",
+     "hf": [
+      "MINT-SJTU/RoboFAC-dataset"
+     ],
+     "share": 1.0,
+     "tokens": 108916251,
+     "text_tokens": 4576827,
+     "vision_tokens": 104339424,
+     "est_records": 66543,
+     "sampling": "全量",
+     "file_patterns": {
+      "MINT-SJTU/RoboFAC-dataset": [
+       "training_qa\\.json"
+      ]
+     },
+     "n_files": 1
+    },
+    {
+     "entry": "aha",
+     "name": "AHA",
+     "hf": [
+      "ACIDE/AHA_Dataset_2e",
+      "ACIDE/AHA_Dataset_2e_1p",
+      "ACIDE/AHA_Dataset_2e_2p"
+     ],
+     "share": 1.0,
+     "tokens": 3137463,
+     "text_tokens": 273591,
+     "vision_tokens": 2863872,
+     "est_records": 21686,
+     "sampling": "全量",
+     "file_patterns": {
+      "ACIDE/AHA_Dataset_2e": [
+       "data/.*\\.parquet"
+      ],
+      "ACIDE/AHA_Dataset_2e_1p": [
+       "data/.*\\.parquet"
+      ],
+      "ACIDE/AHA_Dataset_2e_2p": [
+       "data/.*\\.parquet"
+      ]
+     },
+     "n_files": 30
+    }
+   ]
+  },
+  {
+   "dir": "C",
+   "budget": 5000000000,
+   "tokens": 5000000000,
+   "shortfall": 0,
+   "items": [
+    {
+     "entry": "molmoact-mid",
+     "name": "MolmoAct Mid-training Mixture",
+     "hf": [
+      "allenai/MolmoAct-Midtraining-Mixture"
+     ],
+     "share": 0.4917,
+     "tokens": 3000000000,
+     "text_tokens": 1250376033,
+     "vision_tokens": 1749623966,
+     "est_records": 2916039,
+     "sampling": "随机抽取该条目 49.2% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "allenai/MolmoAct-Midtraining-Mixture": [
+       ".*\\.parquet"
+      ]
+     },
+     "n_files": 3460
+    },
+    {
+     "entry": "molmoact-pre",
+     "name": "MolmoAct Pre-training Mixture",
+     "hf": [
+      "allenai/MolmoAct-Pretraining-Mixture"
+     ],
+     "share": 0.1742,
+     "tokens": 1750000000,
+     "text_tokens": 1498087686,
+     "vision_tokens": 251912313,
+     "est_records": 3936129,
+     "sampling": "随机抽取该条目 17.4% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "allenai/MolmoAct-Pretraining-Mixture": [
+       "(bc_z|bridge_dataset|fractal20220817_data|auxiliary_trace)/.*\\.parquet"
+      ]
+     },
+     "n_files": 1890
+    },
+    {
+     "entry": "sharerobot-afford",
+     "name": "ShareRobot：动作可行性辨识",
+     "hf": [
+      "BAAI/ShareRobot"
+     ],
+     "share": 0.4162,
+     "tokens": 250000000,
+     "text_tokens": 10732084,
+     "vision_tokens": 239267915,
+     "est_records": 130964,
+     "sampling": "随机抽取该条目 41.6% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "BAAI/ShareRobot": [
+       "planning/train/(discriminative_affordance_\\((positive|negative)\\)|generative_affordance)_task\\.json"
+      ]
+     },
+     "n_files": 3
+    }
+   ]
+  },
+  {
+   "dir": "D",
+   "budget": 5000000000,
+   "tokens": 5000000000,
+   "shortfall": 0,
+   "items": [
+    {
+     "entry": "sharerobot-future",
+     "name": "ShareRobot：下一事件预测",
+     "hf": [
+      "BAAI/ShareRobot"
+     ],
+     "share": 1.0,
+     "tokens": 194478729,
+     "text_tokens": 8740229,
+     "vision_tokens": 185738500,
+     "est_records": 105114,
+     "sampling": "全量",
+     "file_patterns": {
+      "BAAI/ShareRobot": [
+       "planning/train/future_prediction_task\\.json"
+      ]
+     },
+     "n_files": 1
+    },
+    {
+     "entry": "eo-physics",
+     "name": "EO-Data1.5M：物理常识 / 关系推理",
+     "hf": [
+      "IPEC-COMMUNITY/EO-Data1.5M"
+     ],
+     "share": 1.0,
+     "tokens": 11382394,
+     "text_tokens": 2960464,
+     "vision_tokens": 8421930,
+     "est_records": 93577,
+     "sampling": "全量",
+     "file_patterns": {
+      "IPEC-COMMUNITY/EO-Data1.5M": [
+       "qa-(physical_common_sense|relation_reasoning)/.*\\.parquet"
+      ]
+     },
+     "n_files": 92
+    },
+    {
+     "entry": "webworld",
+     "name": "Qwen WebWorldData",
+     "hf": [
+      "Qwen/WebWorldData"
+     ],
+     "share": 0.1042,
+     "tokens": 1750000000,
+     "text_tokens": 1750000000,
+     "vision_tokens": 0,
+     "est_records": 81850,
+     "sampling": "随机抽取该条目 10.4% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "Qwen/WebWorldData": [
+       "WebWorld_Training\\.jsonl"
+      ]
+     },
+     "n_files": 1
+    },
+    {
+     "entry": "cwm-swe",
+     "name": "SWE-rebench-V2 CodeWorldModeling",
+     "hf": [
+      "marin-community/swe-rebench-v2-CodeWorldModeling"
+     ],
+     "share": 0.0119,
+     "tokens": 1750000000,
+     "text_tokens": 1750000000,
+     "vision_tokens": 0,
+     "est_records": 22114,
+     "sampling": "随机抽取该条目 1.2% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "marin-community/swe-rebench-v2-CodeWorldModeling": [
+       "data/traces-.*\\.parquet"
+      ]
+     },
+     "n_files": 4783
+    },
+    {
+     "entry": "codeio",
+     "name": "CodeI/O PyEdu-Reasoning",
+     "hf": [
+      "hkust-nlp/CodeIO-PyEdu-Reasoning"
+     ],
+     "share": 0.3945,
+     "tokens": 1294138877,
+     "text_tokens": 1294138877,
+     "vision_tokens": 0,
+     "est_records": 640455,
+     "sampling": "随机抽取该条目 39.4% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "hkust-nlp/CodeIO-PyEdu-Reasoning": [
+       "pyedur_full\\.jsonl"
+      ]
+     },
+     "n_files": 1
+    }
+   ]
+  },
+  {
+   "dir": "E",
+   "budget": 5000000000,
+   "tokens": 4475763472,
+   "shortfall": 524236528,
+   "items": [
+    {
+     "entry": "cosmos-reasoning",
+     "name": "Cosmos-Reason1：下一步动作推理",
+     "hf": [
+      "nvidia/Cosmos-Reason1-SFT-Dataset"
+     ],
+     "share": 1.0,
+     "tokens": 1020708451,
+     "text_tokens": 276827299,
+     "vision_tokens": 743881152,
+     "est_records": 474414,
+     "sampling": "全量",
+     "file_patterns": {
+      "nvidia/Cosmos-Reason1-SFT-Dataset": [
+       "(agibot|bridgev2|holoassist)/.*_reasoning\\.json",
+       "robovqa/robovqa_reasoning_0\\.json"
+      ]
+     },
+     "n_files": 4
+    },
+    {
+     "entry": "sharerobot-plan",
+     "name": "ShareRobot：规划与剩余步骤",
+     "hf": [
+      "BAAI/ShareRobot"
+     ],
+     "share": 1.0,
+     "tokens": 581032581,
+     "text_tokens": 33220235,
+     "vision_tokens": 547812346,
+     "est_records": 315304,
+     "sampling": "全量",
+     "file_patterns": {
+      "BAAI/ShareRobot": [
+       "planning/train/planning(_with_context|_remaining_steps)?_task\\.json"
+      ]
+     },
+     "n_files": 3
+    },
+    {
+     "entry": "eo-plan",
+     "name": "EO-Data1.5M：任务规划",
+     "hf": [
+      "IPEC-COMMUNITY/EO-Data1.5M"
+     ],
+     "share": 1.0,
+     "tokens": 35135852,
+     "text_tokens": 15688022,
+     "vision_tokens": 19447830,
+     "est_records": 216087,
+     "sampling": "全量",
+     "file_patterns": {
+      "IPEC-COMMUNITY/EO-Data1.5M": [
+       "qa-task_planning/.*\\.parquet"
+      ]
+     },
+     "n_files": 212
+    },
+    {
+     "entry": "aguvis-s2",
+     "name": "Aguvis stage2 (GUI 规划)",
+     "hf": [
+      "xlangai/aguvis-stage2"
+     ],
+     "share": 1.0,
+     "tokens": 584994427,
+     "text_tokens": 195571323,
+     "vision_tokens": 389423104,
+     "est_records": 380147,
+     "sampling": "全量",
+     "file_patterns": {
+      "xlangai/aguvis-stage2": [
+       ".*-l3\\.json",
+       "(android_control|coat|guide|guiact-web-single)\\.json"
+      ]
+     },
+     "n_files": 10
+    },
+    {
+     "entry": "eo-interleave",
+     "name": "EO-Data1.5M：交错推理-动作",
+     "hf": [
+      "IPEC-COMMUNITY/EO-Data1.5M"
+     ],
+     "share": 1.0,
+     "tokens": 82272856,
+     "text_tokens": 21301366,
+     "vision_tokens": 60971490,
+     "est_records": 122476,
+     "sampling": "全量",
+     "file_patterns": {
+      "IPEC-COMMUNITY/EO-Data1.5M": [
+       "interleave-(temporal|trajectory|free_chat|random_qa)/.*\\.parquet"
+      ]
+     },
+     "n_files": 46
+    },
+    {
+     "entry": "agentnet",
+     "name": "AgentNet (OpenCUA)",
+     "hf": [
+      "xlangai/AgentNet"
+     ],
+     "share": 1.0,
+     "tokens": 755841016,
+     "text_tokens": 330786808,
+     "vision_tokens": 425054208,
+     "est_records": 22225,
+     "sampling": "全量",
+     "file_patterns": {
+      "xlangai/AgentNet": [
+       "agentnet_.*\\.jsonl"
+      ]
+     },
+     "n_files": 2
+    },
+    {
+     "entry": "scalecua-nav",
+     "name": "ScaleCUA 导航轨迹",
+     "hf": [
+      "OpenGVLab/ScaleCUA-Data"
+     ],
+     "share": 1.0,
+     "tokens": 717757554,
+     "text_tokens": 149777522,
+     "vision_tokens": 567980032,
+     "est_records": 554668,
+     "sampling": "全量",
+     "file_patterns": {
+      "OpenGVLab/ScaleCUA-Data": [
+       "annotations/.*navigation.*\\.jsonl"
+      ]
+     },
+     "n_files": 24
+    },
+    {
+     "entry": "agenttrek",
+     "name": "AgentTrek",
+     "hf": [
+      "xlangai/AgentTrek"
+     ],
+     "share": 1.0,
+     "tokens": 512153671,
+     "text_tokens": 512153671,
+     "vision_tokens": 0,
+     "est_records": 57658,
+     "sampling": "全量",
+     "file_patterns": {
+      "xlangai/AgentTrek": [
+       "agenttrek_1207\\.json"
+      ]
+     },
+     "n_files": 1
+    },
+    {
+     "entry": "era",
+     "name": "ERA 先验数据",
+     "hf": [
+      "EmbodiedReasoningAgent/EB-ALFRED_trajectory_augmented_prior_dataset",
+      "EmbodiedReasoningAgent/EB-ALFRED_environment_anchored_prior_dataset",
+      "EmbodiedReasoningAgent/EB-ALFRED_external_knowledge_prior_dataset",
+      "EmbodiedReasoningAgent/EB-Man_trajectory_augmented_prior_dataset",
+      "EmbodiedReasoningAgent/EB-Man_environment_anchored_prior_dataset",
+      "EmbodiedReasoningAgent/EB-Man_external_knowledge_prior_dataset"
+     ],
+     "share": 1.0,
+     "tokens": 88075636,
+     "text_tokens": 78370292,
+     "vision_tokens": 9705344,
+     "est_records": 97832,
+     "sampling": "全量",
+     "file_patterns": {
+      "EmbodiedReasoningAgent/EB-ALFRED_trajectory_augmented_prior_dataset": [
+       ".*\\.json"
+      ],
+      "EmbodiedReasoningAgent/EB-ALFRED_environment_anchored_prior_dataset": [
+       ".*\\.json"
+      ],
+      "EmbodiedReasoningAgent/EB-ALFRED_external_knowledge_prior_dataset": [
+       ".*\\.json"
+      ],
+      "EmbodiedReasoningAgent/EB-Man_trajectory_augmented_prior_dataset": [
+       ".*\\.json"
+      ],
+      "EmbodiedReasoningAgent/EB-Man_environment_anchored_prior_dataset": [
+       ".*\\.json"
+      ],
+      "EmbodiedReasoningAgent/EB-Man_external_knowledge_prior_dataset": [
+       ".*\\.json"
+      ]
+     },
+     "n_files": 6
+    },
+    {
+     "entry": "ebench",
+     "name": "EmbodiedBench 轨迹",
+     "hf": [
+      "EmbodiedBench/EB-Man_trajectory_dataset",
+      "EmbodiedBench/EB-Alfred_trajectory_dataset",
+      "EmbodiedBench/EB-Nav_trajectory_dataset"
+     ],
+     "share": 1.0,
+     "tokens": 43964336,
+     "text_tokens": 9049156,
+     "vision_tokens": 34915180,
+     "est_records": 8424,
+     "sampling": "全量",
+     "file_patterns": {
+      "EmbodiedBench/EB-Man_trajectory_dataset": [
+       ".*multi_step\\.json"
+      ],
+      "EmbodiedBench/EB-Alfred_trajectory_dataset": [
+       ".*multi_step\\.json"
+      ],
+      "EmbodiedBench/EB-Nav_trajectory_dataset": [
+       ".*multi_step\\.json"
+      ]
+     },
+     "n_files": 3
+    },
+    {
+     "entry": "embodied-reasoner",
+     "name": "Embodied-Reasoner",
+     "hf": [
+      "zwq2018/embodied_reasoner"
+     ],
+     "share": 1.0,
+     "tokens": 32269044,
+     "text_tokens": 17193748,
+     "vision_tokens": 15075296,
+     "est_records": 9684,
+     "sampling": "全量",
+     "file_patterns": {
+      "zwq2018/embodied_reasoner": [
+       "train_multiturn_9390\\.json"
+      ]
+     },
+     "n_files": 1
+    },
+    {
+     "entry": "agenttraj-l",
+     "name": "AgentGym AgentTraj-L",
+     "hf": [
+      "AgentGym/AgentTraj-L"
+     ],
+     "share": 1.0,
+     "tokens": 21558048,
+     "text_tokens": 21558048,
+     "vision_tokens": 0,
+     "est_records": 14475,
+     "sampling": "全量",
+     "file_patterns": {
+      "AgentGym/AgentTraj-L": [
+       ".*_train\\.json"
+      ]
+     },
+     "n_files": 11
+    }
+   ]
+  },
+  {
+   "dir": "F",
+   "budget": 5000000000,
+   "tokens": 5000000000,
+   "shortfall": 0,
+   "items": [
+    {
+     "entry": "toucan",
+     "name": "Toucan-1.5M",
+     "hf": [
+      "Agent-Ark/Toucan-1.5M"
+     ],
+     "share": 0.5776,
+     "tokens": 3000000000,
+     "text_tokens": 2999826124,
+     "vision_tokens": 173875,
+     "est_records": 533854,
+     "sampling": "随机抽取该条目 57.8% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "Agent-Ark/Toucan-1.5M": [
+       "(Kimi-K2|Qwen3)/.*\\.parquet"
+      ]
+     },
+     "n_files": 84
+    },
+    {
+     "entry": "nemotron-agentic-v2",
+     "name": "Nemotron-SFT-Agentic-v2",
+     "hf": [
+      "nvidia/Nemotron-SFT-Agentic-v2"
+     ],
+     "share": 0.3826,
+     "tokens": 1750000000,
+     "text_tokens": 1750000000,
+     "vision_tokens": 0,
+     "est_records": 401154,
+     "sampling": "随机抽取该条目 38.3% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "nvidia/Nemotron-SFT-Agentic-v2": [
+       "data/.*\\.jsonl"
+      ]
+     },
+     "n_files": 3
+    },
+    {
+     "entry": "nemotron-terminal",
+     "name": "Nemotron-Terminal-Corpus",
+     "hf": [
+      "nvidia/Nemotron-Terminal-Corpus"
+     ],
+     "share": 0.0406,
+     "tokens": 250000000,
+     "text_tokens": 249987583,
+     "vision_tokens": 12416,
+     "est_records": 14685,
+     "sampling": "随机抽取该条目 4.1% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "nvidia/Nemotron-Terminal-Corpus": [
+       ".*\\.parquet"
+      ]
+     },
+     "n_files": 29
+    }
+   ]
+  },
+  {
+   "dir": "G",
+   "budget": 5000000000,
+   "tokens": 5000000000,
+   "shortfall": 0,
+   "items": [
+    {
+     "entry": "finevision",
+     "name": "FineVision",
+     "hf": [
+      "HuggingFaceM4/FineVision"
+     ],
+     "share": 0.0795,
+     "tokens": 3000000000,
+     "text_tokens": 969110519,
+     "vision_tokens": 2030889480,
+     "est_records": 1876411,
+     "sampling": "随机抽取该条目 7.9% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "HuggingFaceM4/FineVision": [
+       "(?!(aguvis-stage-1|groundui|screenqa|screen2words|alfworldgpt|websight|drivelm)/).*/train-.*\\.parquet"
+      ]
+     },
+     "n_files": 8814
+    },
+    {
+     "entry": "nemotron-vlm-v2",
+     "name": "Nemotron-VLM-Dataset-v2",
+     "hf": [
+      "nvidia/Nemotron-VLM-Dataset-v2"
+     ],
+     "share": 0.1753,
+     "tokens": 1750000000,
+     "text_tokens": 1038631807,
+     "vision_tokens": 711368192,
+     "est_records": 1293981,
+     "sampling": "随机抽取该条目 17.5% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "nvidia/Nemotron-VLM-Dataset-v2": [
+       "[^/]+/[^/.][^/]*\\.jsonl"
+      ]
+     },
+     "n_files": 51
+    },
+    {
+     "entry": "llava-video",
+     "name": "LLaVA-Video-178K",
+     "hf": [
+      "lmms-lab/LLaVA-Video-178K"
+     ],
+     "share": 0.0963,
+     "tokens": 250000000,
+     "text_tokens": 31645961,
+     "vision_tokens": 218354038,
+     "est_records": 145335,
+     "sampling": "随机抽取该条目 9.6% 的样本（按样本数，不截断单条）",
+     "file_patterns": {
+      "lmms-lab/LLaVA-Video-178K": [
+       ".*\\.json"
+      ]
+     },
+     "n_files": 44
+    }
+   ]
+  }
+ ]
+}

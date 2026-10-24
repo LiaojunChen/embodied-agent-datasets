@@ -14,7 +14,7 @@ import data
 
 ROOT = pathlib.Path(__file__).parent
 CACHE = ROOT / "stats.json"
-OUT = ROOT / "site" / "index.html"
+OUT = ROOT / "site" / "v1.html"  # previous dataset list; the main page is build2.py -> index.html
 API = "https://huggingface.co/api/datasets/{}?expand[]=downloads&expand[]=downloadsAllTime&expand[]=likes&expand[]=gated&expand[]=lastModified"
 
 

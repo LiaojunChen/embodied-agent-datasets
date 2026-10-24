@@ -1,0 +1,8 @@
+{
+ "xlam": {"records": 60000, "text_tokens": 24000000, "images": 0, "videos": 0,
+          "basis": "gated，无法读取；按文件 96 MB、约 4 字节 / token 估算，记录数取 card 的 60k"},
+ "miroverse": {"records": 160000, "text_tokens": 1800000000, "images": 0, "videos": 0,
+               "basis": "gated，无法读取；按 jsonl_sft 共 8.18 GB、约 4.5 字节 / token（含 JSON 转义开销）估算，记录数为粗估"},
+ "uground": {"records": 1181000, "text_tokens": 400000000, "images": 1181000, "videos": 0,
+             "basis": "gated，无法读取；按论文 1000 万元素 / 约 118 万截图（150k + 258k + 773k 三个子集）、每元素约 40 token 估算"}
+}

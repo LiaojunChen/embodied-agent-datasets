@@ -1,436 +1,436 @@
 {
- "fetchedAt": "2026-10-22 09:36 UTC",
+ "fetchedAt": "2026-10-24 21:25 UTC",
  "stats": {
   "ACIDE/AHA_Dataset_2e": {
-   "downloads": 27,
-   "downloadsAllTime": 690,
+   "downloads": 30,
+   "downloadsAllTime": 695,
    "likes": 0,
    "gated": false,
    "lastModified": "2025-07-14T00:40:28.000Z"
   },
   "ACIDE/AHA_Dataset_2e_1p": {
-   "downloads": 19,
-   "downloadsAllTime": 493,
+   "downloads": 17,
+   "downloadsAllTime": 495,
    "likes": 0,
    "gated": false,
    "lastModified": "2025-07-14T01:47:50.000Z"
   },
   "ACIDE/AHA_Dataset_2e_2p": {
-   "downloads": 46,
-   "downloadsAllTime": 1272,
+   "downloads": 43,
+   "downloadsAllTime": 1274,
    "likes": 0,
    "gated": false,
    "lastModified": "2025-07-14T10:27:43.000Z"
   },
   "Agent-Ark/Toucan-1.5M": {
-   "downloads": 11792,
-   "downloadsAllTime": 93695,
-   "likes": 243,
+   "downloads": 12330,
+   "downloadsAllTime": 94873,
+   "likes": 247,
    "gated": false,
    "lastModified": "2025-10-04T00:51:18.000Z"
   },
   "AgentGym/AgentEval": {
-   "downloads": 438,
-   "downloadsAllTime": 3860,
+   "downloads": 440,
+   "downloadsAllTime": 3885,
    "likes": 1,
    "gated": false,
    "lastModified": "2024-09-21T07:09:52.000Z"
   },
   "AgentGym/AgentTraj-L": {
-   "downloads": 1108,
-   "downloadsAllTime": 9000,
+   "downloads": 1107,
+   "downloadsAllTime": 9074,
    "likes": 25,
    "gated": false,
    "lastModified": "2025-09-02T13:11:20.000Z"
   },
   "Alibaba-NLP/WebShaper": {
-   "downloads": 616,
-   "downloadsAllTime": 20848,
+   "downloads": 595,
+   "downloadsAllTime": 20897,
    "likes": 26,
    "gated": false,
    "lastModified": "2025-07-22T02:13:28.000Z"
   },
   "BAAI/ShareRobot": {
-   "downloads": 13576,
-   "downloadsAllTime": 361578,
+   "downloads": 15421,
+   "downloadsAllTime": 364122,
    "likes": 31,
    "gated": false,
    "lastModified": "2025-08-24T07:40:10.000Z"
   },
   "EmbodiedBench/EB-Alfred_trajectory_dataset": {
-   "downloads": 244,
-   "downloadsAllTime": 1933,
+   "downloads": 374,
+   "downloadsAllTime": 2081,
    "likes": 2,
    "gated": false,
    "lastModified": "2025-06-04T01:26:09.000Z"
   },
   "EmbodiedBench/EB-Man_trajectory_dataset": {
-   "downloads": 120,
-   "downloadsAllTime": 794,
+   "downloads": 125,
+   "downloadsAllTime": 808,
    "likes": 2,
    "gated": false,
    "lastModified": "2025-06-04T01:43:07.000Z"
   },
   "EmbodiedBench/EB-Nav_trajectory_dataset": {
-   "downloads": 383,
-   "downloadsAllTime": 1319,
+   "downloads": 386,
+   "downloadsAllTime": 1330,
    "likes": 2,
    "gated": false,
    "lastModified": "2025-06-04T01:44:49.000Z"
   },
   "EmbodiedReasoningAgent/EB-ALFRED_environment_anchored_prior_dataset": {
-   "downloads": 22,
-   "downloadsAllTime": 252,
+   "downloads": 23,
+   "downloadsAllTime": 254,
    "likes": 0,
    "gated": false,
    "lastModified": "2025-10-18T09:49:21.000Z"
   },
   "EmbodiedReasoningAgent/EB-ALFRED_external_knowledge_prior_dataset": {
-   "downloads": 15,
-   "downloadsAllTime": 190,
+   "downloads": 17,
+   "downloadsAllTime": 192,
    "likes": 0,
    "gated": false,
    "lastModified": "2025-10-18T09:42:34.000Z"
   },
   "EmbodiedReasoningAgent/EB-ALFRED_trajectory_augmented_prior_dataset": {
-   "downloads": 55,
-   "downloadsAllTime": 358,
+   "downloads": 58,
+   "downloadsAllTime": 361,
    "likes": 0,
    "gated": false,
    "lastModified": "2025-10-18T09:50:23.000Z"
   },
   "EmbodiedReasoningAgent/EB-Man_environment_anchored_prior_dataset": {
-   "downloads": 16,
-   "downloadsAllTime": 232,
+   "downloads": 19,
+   "downloadsAllTime": 235,
    "likes": 0,
    "gated": false,
    "lastModified": "2025-10-18T09:53:53.000Z"
   },
   "EmbodiedReasoningAgent/EB-Man_external_knowledge_prior_dataset": {
-   "downloads": 19,
-   "downloadsAllTime": 204,
+   "downloads": 20,
+   "downloadsAllTime": 205,
    "likes": 0,
    "gated": false,
    "lastModified": "2025-10-18T09:38:14.000Z"
   },
   "EmbodiedReasoningAgent/EB-Man_trajectory_augmented_prior_dataset": {
-   "downloads": 29,
-   "downloadsAllTime": 230,
+   "downloads": 34,
+   "downloadsAllTime": 236,
    "likes": 0,
    "gated": false,
    "lastModified": "2025-10-18T09:55:46.000Z"
   },
   "JingkunAn/RefSpatial": {
-   "downloads": 5955,
-   "downloadsAllTime": 41314,
+   "downloads": 4583,
+   "downloadsAllTime": 42054,
    "likes": 26,
    "gated": false,
    "lastModified": "2026-02-04T21:31:58.000Z"
   },
   "MINT-SJTU/RoboFAC-dataset": {
-   "downloads": 9883,
-   "downloadsAllTime": 225987,
+   "downloads": 9115,
+   "downloadsAllTime": 227202,
    "likes": 6,
    "gated": false,
    "lastModified": "2026-07-09T03:49:03.000Z"
   },
   "NousResearch/hermes-function-calling-v1": {
-   "downloads": 56387,
-   "downloadsAllTime": 306814,
-   "likes": 504,
+   "downloads": 52765,
+   "downloadsAllTime": 309297,
+   "likes": 508,
    "gated": false,
    "lastModified": "2026-01-03T13:32:47.000Z"
   },
   "OS-Copilot/OS-Atlas-data": {
-   "downloads": 15700,
-   "downloadsAllTime": 101504,
+   "downloads": 15000,
+   "downloadsAllTime": 102674,
    "likes": 48,
    "gated": false,
    "lastModified": "2024-12-04T10:26:47.000Z"
   },
   "OpenGVLab/GUI-Odyssey": {
-   "downloads": 36717,
-   "downloadsAllTime": 882393,
+   "downloads": 43226,
+   "downloadsAllTime": 889173,
    "likes": 26,
    "gated": false,
    "lastModified": "2025-08-04T02:23:03.000Z"
   },
   "OpenResearcher/OpenResearcher-Dataset": {
-   "downloads": 3489,
-   "downloadsAllTime": 56750,
+   "downloads": 3452,
+   "downloadsAllTime": 57019,
    "likes": 138,
    "gated": false,
    "lastModified": "2026-08-20T21:14:46.000Z"
   },
   "PeterJinGo/nq_hotpotqa_train": {
-   "downloads": 2527,
-   "downloadsAllTime": 26359,
+   "downloads": 2391,
+   "downloadsAllTime": 26497,
    "likes": 17,
    "gated": false,
    "lastModified": "2025-03-13T13:17:36.000Z"
   },
   "R2E-Gym/R2E-Gym-Subset": {
-   "downloads": 18103,
-   "downloadsAllTime": 108278,
+   "downloads": 18264,
+   "downloadsAllTime": 108968,
    "likes": 29,
    "gated": false,
    "lastModified": "2026-07-23T22:28:07.000Z"
   },
   "R2E-Gym/R2EGym-SFT-Trajectories": {
-   "downloads": 888,
-   "downloadsAllTime": 5935,
+   "downloads": 1024,
+   "downloadsAllTime": 6120,
    "likes": 11,
    "gated": false,
    "lastModified": "2025-02-09T04:20:44.000Z"
   },
   "R2E-Gym/R2EGym-Verifier-Trajectories": {
-   "downloads": 351,
-   "downloadsAllTime": 1835,
+   "downloads": 373,
+   "downloadsAllTime": 1874,
    "likes": 3,
    "gated": false,
    "lastModified": "2025-02-25T10:56:06.000Z"
   },
   "SWE-Gym/SWE-Gym": {
-   "downloads": 29281,
-   "downloadsAllTime": 8300118,
+   "downloads": 29111,
+   "downloadsAllTime": 8301264,
    "likes": 29,
    "gated": false,
    "lastModified": "2025-05-10T03:27:03.000Z"
   },
   "SWE-bench/SWE-smith": {
-   "downloads": 81802,
-   "downloadsAllTime": 499575,
-   "likes": 63,
+   "downloads": 83451,
+   "downloadsAllTime": 505603,
+   "likes": 64,
    "gated": false,
    "lastModified": "2025-12-14T19:30:19.000Z"
   },
   "SWE-bench/SWE-smith-trajectories": {
-   "downloads": 11253,
-   "downloadsAllTime": 68894,
+   "downloads": 11193,
+   "downloadsAllTime": 70115,
    "likes": 81,
    "gated": false,
    "lastModified": "2025-07-19T01:18:16.000Z"
   },
   "Salesforce/APIGen-MT-5k": {
-   "downloads": 4972,
-   "downloadsAllTime": 30884,
-   "likes": 116,
+   "downloads": 4831,
+   "downloadsAllTime": 31375,
+   "likes": 117,
    "gated": false,
    "lastModified": "2025-10-10T16:53:50.000Z"
   },
   "Salesforce/xlam-function-calling-60k": {
-   "downloads": 19630,
-   "downloadsAllTime": 247734,
+   "downloads": 18586,
+   "downloadsAllTime": 249507,
    "likes": 750,
    "gated": true,
    "lastModified": "2025-01-24T19:25:58.000Z"
   },
   "Team-ACE/ToolACE": {
-   "downloads": 36305,
-   "downloadsAllTime": 130922,
-   "likes": 205,
+   "downloads": 33771,
+   "downloadsAllTime": 132680,
+   "likes": 207,
    "gated": false,
    "lastModified": "2024-09-04T02:37:59.000Z"
   },
   "Tianli/robovqa": {
-   "downloads": 7653,
-   "downloadsAllTime": 118445,
+   "downloads": 8380,
+   "downloadsAllTime": 119578,
    "likes": 6,
    "gated": false,
    "lastModified": "2025-07-25T17:10:14.000Z"
   },
   "Yhyu13/ToolBench_toolllama_G123_dfs": {
-   "downloads": 824,
-   "downloadsAllTime": 4561,
+   "downloads": 789,
+   "downloadsAllTime": 4618,
    "likes": 6,
    "gated": false,
    "lastModified": "2024-01-03T09:58:25.000Z"
   },
   "allenai/pixmo-points": {
-   "downloads": 5435,
-   "downloadsAllTime": 25017,
-   "likes": 48,
+   "downloads": 5514,
+   "downloadsAllTime": 25177,
+   "likes": 49,
    "gated": false,
    "lastModified": "2024-11-27T22:12:24.000Z"
   },
   "ckg/AndroidControlParsedWithImages-20k": {
-   "downloads": 1115,
-   "downloadsAllTime": 9003,
+   "downloads": 1116,
+   "downloadsAllTime": 9032,
    "likes": 1,
    "gated": false,
    "lastModified": "2024-11-19T02:01:57.000Z"
   },
   "inclusionAI/ASearcher-train-data": {
-   "downloads": 575,
-   "downloadsAllTime": 6022,
+   "downloads": 581,
+   "downloadsAllTime": 6093,
    "likes": 26,
    "gated": false,
    "lastModified": "2025-08-13T08:48:32.000Z"
   },
   "internlm/Agent-FLAN": {
    "downloads": 805,
-   "downloadsAllTime": 9832,
+   "downloadsAllTime": 9933,
    "likes": 107,
    "gated": false,
    "lastModified": "2024-03-20T09:45:55.000Z"
   },
   "miromind-ai/MiroVerse-v0.1": {
-   "downloads": 181,
-   "downloadsAllTime": 15255,
+   "downloads": 435,
+   "downloadsAllTime": 15533,
    "likes": 242,
    "gated": true,
    "lastModified": "2026-01-16T02:06:27.000Z"
   },
   "nebius/SWE-agent-trajectories": {
-   "downloads": 12541,
-   "downloadsAllTime": 49304,
-   "likes": 103,
+   "downloads": 13915,
+   "downloadsAllTime": 51325,
+   "likes": 104,
    "gated": false,
    "lastModified": "2024-12-23T12:42:05.000Z"
   },
   "nebius/SWE-rebench": {
-   "downloads": 43572,
-   "downloadsAllTime": 12732067,
-   "likes": 75,
+   "downloads": 44811,
+   "downloadsAllTime": 12736579,
+   "likes": 76,
    "gated": false,
    "lastModified": "2025-12-23T19:41:57.000Z"
   },
   "nebius/SWE-rebench-V2": {
-   "downloads": 55169,
-   "downloadsAllTime": 332650,
+   "downloads": 63938,
+   "downloadsAllTime": 348700,
    "likes": 71,
    "gated": false,
    "lastModified": "2026-10-01T17:53:16.000Z"
   },
   "nebius/SWE-rebench-openhands-trajectories": {
-   "downloads": 9686,
-   "downloadsAllTime": 40811,
-   "likes": 150,
+   "downloads": 9385,
+   "downloadsAllTime": 41720,
+   "likes": 151,
    "gated": false,
    "lastModified": "2025-12-27T14:08:07.000Z"
   },
   "neulab/agent-data-collection": {
-   "downloads": 16718,
-   "downloadsAllTime": 77496,
+   "downloads": 27809,
+   "downloadsAllTime": 89476,
    "likes": 118,
    "gated": false,
    "lastModified": "2026-03-09T18:54:05.000Z"
   },
   "nvidia/Cosmos-Reason1-SFT-Dataset": {
-   "downloads": 1869,
-   "downloadsAllTime": 24207,
+   "downloads": 1506,
+   "downloadsAllTime": 25031,
    "likes": 31,
    "gated": false,
    "lastModified": "2025-05-20T06:52:30.000Z"
   },
   "nvidia/Nemotron-RL-Agentic-Function-Calling-Pivot-v1": {
-   "downloads": 1880,
-   "downloadsAllTime": 10574,
+   "downloads": 1807,
+   "downloadsAllTime": 10721,
    "likes": 17,
    "gated": false,
    "lastModified": "2026-09-29T05:49:54.000Z"
   },
   "nvidia/Nemotron-SFT-Agentic-v2": {
-   "downloads": 9221,
-   "downloadsAllTime": 63615,
+   "downloads": 9216,
+   "downloadsAllTime": 64405,
    "likes": 86,
    "gated": false,
    "lastModified": "2026-08-10T11:39:11.000Z"
   },
   "nvidia/Nemotron-SFT-Agentic-v4": {
-   "downloads": 988,
-   "downloadsAllTime": 988,
-   "likes": 5,
+   "downloads": 1514,
+   "downloadsAllTime": 1514,
+   "likes": 7,
    "gated": false,
    "lastModified": "2026-10-15T00:01:09.000Z"
   },
   "nvidia/SWE-Hero-openhands-trajectories": {
-   "downloads": 3086,
-   "downloadsAllTime": 12279,
+   "downloads": 3187,
+   "downloadsAllTime": 12577,
    "likes": 30,
    "gated": false,
    "lastModified": "2026-05-08T17:10:16.000Z"
   },
   "nvidia/SWE-Zero-openhands-trajectories": {
-   "downloads": 4041,
-   "downloadsAllTime": 16268,
+   "downloads": 4183,
+   "downloadsAllTime": 16646,
    "likes": 25,
    "gated": false,
    "lastModified": "2026-05-05T19:34:05.000Z"
   },
   "nvidia/When2Call": {
-   "downloads": 9594,
-   "downloadsAllTime": 30070,
+   "downloads": 9917,
+   "downloadsAllTime": 30988,
    "likes": 66,
    "gated": false,
    "lastModified": "2025-04-29T00:14:10.000Z"
   },
   "nyu-visionx/VSI-590K": {
-   "downloads": 5531,
-   "downloadsAllTime": 119795,
+   "downloads": 6035,
+   "downloadsAllTime": 120591,
    "likes": 26,
    "gated": false,
    "lastModified": "2025-11-07T03:36:13.000Z"
   },
   "osunlp/UGround-V1-Data": {
-   "downloads": 359,
-   "downloadsAllTime": 63244,
+   "downloads": 293,
+   "downloadsAllTime": 63248,
    "likes": 26,
    "gated": true,
    "lastModified": "2025-05-02T07:04:40.000Z"
   },
   "qiulu66/EgoPlan-Bench2": {
-   "downloads": 122,
-   "downloadsAllTime": 1174,
+   "downloads": 146,
+   "downloadsAllTime": 1208,
    "likes": 3,
    "gated": false,
    "lastModified": "2024-11-05T12:00:52.000Z"
   },
   "webagentlab/webchain": {
-   "downloads": 3228,
-   "downloadsAllTime": 8180,
+   "downloads": 2464,
+   "downloadsAllTime": 8389,
    "likes": 2,
    "gated": false,
    "lastModified": "2026-08-28T12:38:25.000Z"
   },
   "wentao-yuan/robopoint-data": {
-   "downloads": 5208,
-   "downloadsAllTime": 23143,
+   "downloads": 3674,
+   "downloadsAllTime": 23551,
    "likes": 13,
    "gated": false,
    "lastModified": "2024-09-22T03:21:35.000Z"
   },
   "xlangai/AgentNet": {
-   "downloads": 7719,
-   "downloadsAllTime": 65694,
+   "downloads": 8433,
+   "downloadsAllTime": 66772,
    "likes": 96,
    "gated": false,
    "lastModified": "2026-01-09T03:23:13.000Z"
   },
   "xlangai/aguvis-stage1": {
-   "downloads": 1623,
-   "downloadsAllTime": 28223,
+   "downloads": 1578,
+   "downloadsAllTime": 28290,
    "likes": 19,
    "gated": false,
    "lastModified": "2025-07-30T23:04:11.000Z"
   },
   "xlangai/aguvis-stage2": {
-   "downloads": 1517,
-   "downloadsAllTime": 43817,
+   "downloads": 1696,
+   "downloadsAllTime": 44119,
    "likes": 28,
    "gated": false,
    "lastModified": "2025-07-30T23:03:51.000Z"
   },
   "zai-org/AgentInstruct": {
-   "downloads": 2510,
-   "downloadsAllTime": 38005,
-   "likes": 243,
+   "downloads": 2567,
+   "downloadsAllTime": 38162,
+   "likes": 244,
    "gated": false,
    "lastModified": "2023-10-23T12:36:19.000Z"
   },
   "zwq2018/embodied_reasoner": {
-   "downloads": 2283,
-   "downloadsAllTime": 19456,
+   "downloads": 2341,
+   "downloadsAllTime": 19640,
    "likes": 22,
    "gated": false,
    "lastModified": "2025-04-21T13:49:38.000Z"

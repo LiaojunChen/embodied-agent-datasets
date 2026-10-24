@@ -28,7 +28,9 @@ jobs:
         with:
           python-version: "3.12"
       - name: Fetch HF stats and render
-        run: python3 build.py
+        run: |
+          python3 build.py      # previous list -> site/v1.html
+          python3 build2.py     # direction / token-mix page -> site/index.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

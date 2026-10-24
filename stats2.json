@@ -1,0 +1,649 @@
+{
+ "fetchedAt": "2026-10-24 21:25 UTC",
+ "stats": {
+  "ACIDE/AHA_Dataset_2e": {
+   "downloads": 30,
+   "downloadsAllTime": 695,
+   "likes": 0,
+   "gated": false,
+   "license": null
+  },
+  "ACIDE/AHA_Dataset_2e_1p": {
+   "downloads": 17,
+   "downloadsAllTime": 495,
+   "likes": 0,
+   "gated": false,
+   "license": null
+  },
+  "ACIDE/AHA_Dataset_2e_2p": {
+   "downloads": 43,
+   "downloadsAllTime": 1274,
+   "likes": 0,
+   "gated": false,
+   "license": null
+  },
+  "Agent-Ark/Toucan-1.5M": {
+   "downloads": 12330,
+   "downloadsAllTime": 94873,
+   "likes": 247,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "AgentGym/AgentTraj-L": {
+   "downloads": 1107,
+   "downloadsAllTime": 9074,
+   "likes": 25,
+   "gated": false,
+   "license": null
+  },
+  "Alibaba-NLP/WebShaper": {
+   "downloads": 595,
+   "downloadsAllTime": 20897,
+   "likes": 26,
+   "gated": false,
+   "license": null
+  },
+  "BAAI/ShareRobot": {
+   "downloads": 15421,
+   "downloadsAllTime": 364122,
+   "likes": 31,
+   "gated": false,
+   "license": null
+  },
+  "Embodied-CoT/embodied_features_bridge": {
+   "downloads": 262,
+   "downloadsAllTime": 2753,
+   "likes": 3,
+   "gated": false,
+   "license": "mit"
+  },
+  "EmbodiedBench/EB-Alfred_trajectory_dataset": {
+   "downloads": 374,
+   "downloadsAllTime": 2081,
+   "likes": 2,
+   "gated": false,
+   "license": null
+  },
+  "EmbodiedBench/EB-Man_trajectory_dataset": {
+   "downloads": 125,
+   "downloadsAllTime": 808,
+   "likes": 2,
+   "gated": false,
+   "license": null
+  },
+  "EmbodiedBench/EB-Nav_trajectory_dataset": {
+   "downloads": 386,
+   "downloadsAllTime": 1330,
+   "likes": 2,
+   "gated": false,
+   "license": null
+  },
+  "EmbodiedReasoningAgent/EB-ALFRED_environment_anchored_prior_dataset": {
+   "downloads": 23,
+   "downloadsAllTime": 254,
+   "likes": 0,
+   "gated": false,
+   "license": null
+  },
+  "EmbodiedReasoningAgent/EB-ALFRED_external_knowledge_prior_dataset": {
+   "downloads": 17,
+   "downloadsAllTime": 192,
+   "likes": 0,
+   "gated": false,
+   "license": null
+  },
+  "EmbodiedReasoningAgent/EB-ALFRED_trajectory_augmented_prior_dataset": {
+   "downloads": 58,
+   "downloadsAllTime": 361,
+   "likes": 0,
+   "gated": false,
+   "license": null
+  },
+  "EmbodiedReasoningAgent/EB-Man_environment_anchored_prior_dataset": {
+   "downloads": 19,
+   "downloadsAllTime": 235,
+   "likes": 0,
+   "gated": false,
+   "license": null
+  },
+  "EmbodiedReasoningAgent/EB-Man_external_knowledge_prior_dataset": {
+   "downloads": 20,
+   "downloadsAllTime": 205,
+   "likes": 0,
+   "gated": false,
+   "license": null
+  },
+  "EmbodiedReasoningAgent/EB-Man_trajectory_augmented_prior_dataset": {
+   "downloads": 34,
+   "downloadsAllTime": 236,
+   "likes": 0,
+   "gated": false,
+   "license": null
+  },
+  "Fraser/python-state-changes": {
+   "downloads": 525,
+   "downloadsAllTime": 23823,
+   "likes": 20,
+   "gated": false,
+   "license": null
+  },
+  "HuggingFaceM4/FineVision": {
+   "downloads": 137186,
+   "downloadsAllTime": 2327545,
+   "likes": 539,
+   "gated": false,
+   "license": null
+  },
+  "HuggingFaceM4/the_cauldron": {
+   "downloads": 362458,
+   "downloadsAllTime": 5658452,
+   "likes": 570,
+   "gated": false,
+   "license": null
+  },
+  "IPEC-COMMUNITY/EO-Data1.5M": {
+   "downloads": 30627,
+   "downloadsAllTime": 139278,
+   "likes": 24,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "JingkunAn/RefSpatial": {
+   "downloads": 4583,
+   "downloadsAllTime": 42054,
+   "likes": 26,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "LangAGI-Lab/world_model_for_wa_desc_with_tao_dataset": {
+   "downloads": 485,
+   "downloadsAllTime": 1431,
+   "likes": 0,
+   "gated": false,
+   "license": null
+  },
+  "MINT-SJTU/RoboFAC-dataset": {
+   "downloads": 9115,
+   "downloadsAllTime": 227202,
+   "likes": 6,
+   "gated": false,
+   "license": "mit"
+  },
+  "Nanbeige/ToolMind": {
+   "downloads": 2771,
+   "downloadsAllTime": 35837,
+   "likes": 184,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "NousResearch/hermes-function-calling-v1": {
+   "downloads": 52765,
+   "downloadsAllTime": 309297,
+   "likes": 508,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "OS-Copilot/OS-Atlas-data": {
+   "downloads": 15000,
+   "downloadsAllTime": 102674,
+   "likes": 48,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "OpenGVLab/GUI-Odyssey": {
+   "downloads": 43226,
+   "downloadsAllTime": 889173,
+   "likes": 26,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "OpenGVLab/ScaleCUA-Data": {
+   "downloads": 7165,
+   "downloadsAllTime": 61279,
+   "likes": 31,
+   "gated": false,
+   "license": null
+  },
+  "OpenResearcher/OpenResearcher-Dataset": {
+   "downloads": 3452,
+   "downloadsAllTime": 57019,
+   "likes": 138,
+   "gated": false,
+   "license": "mit"
+  },
+  "PeterJinGo/nq_hotpotqa_train": {
+   "downloads": 2391,
+   "downloadsAllTime": 26497,
+   "likes": 17,
+   "gated": false,
+   "license": null
+  },
+  "Qwen/WebWorldData": {
+   "downloads": 1182,
+   "downloadsAllTime": 4776,
+   "likes": 82,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "R2E-Gym/R2E-Gym-Subset": {
+   "downloads": 18264,
+   "downloadsAllTime": 108968,
+   "likes": 29,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "R2E-Gym/R2EGym-SFT-Trajectories": {
+   "downloads": 1024,
+   "downloadsAllTime": 6120,
+   "likes": 11,
+   "gated": false,
+   "license": null
+  },
+  "R2E-Gym/R2EGym-Verifier-Trajectories": {
+   "downloads": 373,
+   "downloadsAllTime": 1874,
+   "likes": 3,
+   "gated": false,
+   "license": null
+  },
+  "SWE-Gym/SWE-Gym": {
+   "downloads": 29111,
+   "downloadsAllTime": 8301264,
+   "likes": 29,
+   "gated": false,
+   "license": "mit"
+  },
+  "SWE-bench/SWE-smith": {
+   "downloads": 83451,
+   "downloadsAllTime": 505603,
+   "likes": 64,
+   "gated": false,
+   "license": "mit"
+  },
+  "SWE-bench/SWE-smith-trajectories": {
+   "downloads": 11193,
+   "downloadsAllTime": 70115,
+   "likes": 81,
+   "gated": false,
+   "license": "mit"
+  },
+  "Salesforce/APIGen-MT-5k": {
+   "downloads": 4831,
+   "downloadsAllTime": 31375,
+   "likes": 117,
+   "gated": false,
+   "license": "cc-by-nc-4.0"
+  },
+  "Salesforce/xlam-function-calling-60k": {
+   "downloads": 18586,
+   "downloadsAllTime": 249507,
+   "likes": 750,
+   "gated": true,
+   "license": "cc-by-4.0"
+  },
+  "ServiceNow/GroundCUA": {
+   "downloads": 78559,
+   "downloadsAllTime": 536884,
+   "likes": 45,
+   "gated": false,
+   "license": "mit"
+  },
+  "Team-ACE/ToolACE": {
+   "downloads": 33771,
+   "downloadsAllTime": 132680,
+   "likes": 207,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "Tianli/robovqa": {
+   "downloads": 8380,
+   "downloadsAllTime": 119578,
+   "likes": 6,
+   "gated": false,
+   "license": null
+  },
+  "Yhyu13/ToolBench_toolllama_G123_dfs": {
+   "downloads": 789,
+   "downloadsAllTime": 4618,
+   "likes": 6,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "allenai/Molmo2-VideoPoint": {
+   "downloads": 628,
+   "downloadsAllTime": 5865,
+   "likes": 10,
+   "gated": false,
+   "license": "odc-by"
+  },
+  "allenai/MolmoAct-Midtraining-Mixture": {
+   "downloads": 70546,
+   "downloadsAllTime": 365615,
+   "likes": 10,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "allenai/MolmoAct-Pretraining-Mixture": {
+   "downloads": 24742,
+   "downloadsAllTime": 109806,
+   "likes": 14,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "allenai/pixmo-docs": {
+   "downloads": 2731,
+   "downloadsAllTime": 58032,
+   "likes": 35,
+   "gated": false,
+   "license": "odc-by"
+  },
+  "allenai/pixmo-points": {
+   "downloads": 5514,
+   "downloadsAllTime": 25177,
+   "likes": 49,
+   "gated": false,
+   "license": "odc-by"
+  },
+  "ckg/AndroidControlParsedWithImages-20k": {
+   "downloads": 1116,
+   "downloadsAllTime": 9032,
+   "likes": 1,
+   "gated": false,
+   "license": null
+  },
+  "facebook/action100m-preview": {
+   "downloads": 652,
+   "downloadsAllTime": 26303,
+   "likes": 152,
+   "gated": false,
+   "license": "fair-noncommercial-research-license"
+  },
+  "hkust-nlp/CodeIO-PyEdu-Reasoning": {
+   "downloads": 1071,
+   "downloadsAllTime": 5640,
+   "likes": 59,
+   "gated": false,
+   "license": "odc-by"
+  },
+  "inclusionAI/ASearcher-train-data": {
+   "downloads": 581,
+   "downloadsAllTime": 6093,
+   "likes": 26,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "internlm/Agent-FLAN": {
+   "downloads": 805,
+   "downloadsAllTime": 9933,
+   "likes": 107,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "jasonzhango/SPAR-7M": {
+   "downloads": 3270,
+   "downloadsAllTime": 19471,
+   "likes": 7,
+   "gated": false,
+   "license": "mit"
+  },
+  "keplerccc/Robo2VLM-1": {
+   "downloads": 5737,
+   "downloadsAllTime": 48668,
+   "likes": 20,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "lmms-lab/EgoIT-99K": {
+   "downloads": 46177,
+   "downloadsAllTime": 342129,
+   "likes": 9,
+   "gated": false,
+   "license": null
+  },
+  "lmms-lab/LLaVA-Video-178K": {
+   "downloads": 74503,
+   "downloadsAllTime": 745613,
+   "likes": 211,
+   "gated": false,
+   "license": null
+  },
+  "marin-community/swe-rebench-v2-CodeWorldModeling": {
+   "downloads": 5588,
+   "downloadsAllTime": 13375,
+   "likes": 2,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "miromind-ai/MiroVerse-v0.1": {
+   "downloads": 435,
+   "downloadsAllTime": 15533,
+   "likes": 242,
+   "gated": true,
+   "license": "cc-by-nc-4.0"
+  },
+  "mvp-lab/LLaVA-OneVision-1.5-Instruct-Data": {
+   "downloads": 74111,
+   "downloadsAllTime": 1465663,
+   "likes": 89,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "nebius/SWE-agent-trajectories": {
+   "downloads": 13915,
+   "downloadsAllTime": 51325,
+   "likes": 104,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "nebius/SWE-rebench": {
+   "downloads": 44811,
+   "downloadsAllTime": 12736579,
+   "likes": 76,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "nebius/SWE-rebench-V2": {
+   "downloads": 63938,
+   "downloadsAllTime": 348700,
+   "likes": 71,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "nebius/SWE-rebench-openhands-trajectories": {
+   "downloads": 9385,
+   "downloadsAllTime": 41720,
+   "likes": 151,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "neulab/agent-data-collection": {
+   "downloads": 27809,
+   "downloadsAllTime": 89476,
+   "likes": 118,
+   "gated": false,
+   "license": null
+  },
+  "nvidia/Cosmos-Reason1-SFT-Dataset": {
+   "downloads": 1506,
+   "downloadsAllTime": 25031,
+   "likes": 31,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "nvidia/Nemotron-Agentic-v1": {
+   "downloads": 4019,
+   "downloadsAllTime": 27191,
+   "likes": 193,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "nvidia/Nemotron-RL-Agentic-Function-Calling-Pivot-v1": {
+   "downloads": 1807,
+   "downloadsAllTime": 10721,
+   "likes": 17,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "nvidia/Nemotron-SFT-Agentic-v2": {
+   "downloads": 9216,
+   "downloadsAllTime": 64405,
+   "likes": 86,
+   "gated": false,
+   "license": "cc-by-4.0, apache-2.0, mit"
+  },
+  "nvidia/Nemotron-SFT-Agentic-v4": {
+   "downloads": 1514,
+   "downloadsAllTime": 1514,
+   "likes": 7,
+   "gated": false,
+   "license": "openmdw-1.1"
+  },
+  "nvidia/Nemotron-Terminal-Corpus": {
+   "downloads": 21892,
+   "downloadsAllTime": 146426,
+   "likes": 150,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "nvidia/Nemotron-VLM-Dataset-v2": {
+   "downloads": 9140,
+   "downloadsAllTime": 95691,
+   "likes": 98,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "nvidia/SWE-Hero-openhands-trajectories": {
+   "downloads": 3187,
+   "downloadsAllTime": 12577,
+   "likes": 30,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "nvidia/SWE-Zero-openhands-trajectories": {
+   "downloads": 4183,
+   "downloadsAllTime": 16646,
+   "likes": 25,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "nvidia/When2Call": {
+   "downloads": 9917,
+   "downloadsAllTime": 30988,
+   "likes": 66,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "nyu-visionx/VSI-590K": {
+   "downloads": 6035,
+   "downloadsAllTime": 120591,
+   "likes": 26,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "osunlp/UGround-V1-Data": {
+   "downloads": 293,
+   "downloadsAllTime": 63248,
+   "likes": 26,
+   "gated": true,
+   "license": "cc-by-nc-sa-4.0"
+  },
+  "qiulu66/EgoPlan-Bench2": {
+   "downloads": 146,
+   "downloadsAllTime": 1208,
+   "likes": 3,
+   "gated": false,
+   "license": null
+  },
+  "thuml/bytesized32-world-model-cot": {
+   "downloads": 837,
+   "downloadsAllTime": 2842,
+   "likes": 4,
+   "gated": false,
+   "license": "mit"
+  },
+  "togethercomputer/CoderForge-Preview": {
+   "downloads": 10254,
+   "downloadsAllTime": 61669,
+   "likes": 185,
+   "gated": false,
+   "license": null
+  },
+  "webagentlab/webchain": {
+   "downloads": 2464,
+   "downloadsAllTime": 8389,
+   "likes": 2,
+   "gated": false,
+   "license": "cc-by-4.0"
+  },
+  "wentao-yuan/robopoint-data": {
+   "downloads": 3674,
+   "downloadsAllTime": 23551,
+   "likes": 13,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "xlangai/AgentNet": {
+   "downloads": 8433,
+   "downloadsAllTime": 66772,
+   "likes": 96,
+   "gated": false,
+   "license": "mit"
+  },
+  "xlangai/AgentTrek": {
+   "downloads": 433,
+   "downloadsAllTime": 4328,
+   "likes": 24,
+   "gated": false,
+   "license": null
+  },
+  "xlangai/aguvis-stage1": {
+   "downloads": 1578,
+   "downloadsAllTime": 28290,
+   "likes": 19,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "xlangai/aguvis-stage2": {
+   "downloads": 1696,
+   "downloadsAllTime": 44119,
+   "likes": 28,
+   "gated": false,
+   "license": "apache-2.0"
+  },
+  "xwk123/Mobile-GUI-Worldmodel-SFT": {
+   "downloads": 569,
+   "downloadsAllTime": 2412,
+   "likes": 15,
+   "gated": false,
+   "license": "other"
+  },
+  "zai-org/AgentInstruct": {
+   "downloads": 2567,
+   "downloadsAllTime": 38162,
+   "likes": 244,
+   "gated": false,
+   "license": null
+  },
+  "zechen-nlp/clevrer": {
+   "downloads": 441,
+   "downloadsAllTime": 4174,
+   "likes": 4,
+   "gated": false,
+   "license": null
+  },
+  "zwq2018/embodied_reasoner": {
+   "downloads": 2341,
+   "downloadsAllTime": 19640,
+   "likes": 22,
+   "gated": false,
+   "license": null
+  },
+  "zzliang/GRIT": {
+   "downloads": 875,
+   "downloadsAllTime": 20905,
+   "likes": 167,
+   "gated": false,
+   "license": "ms-pl"
+  }
+ }
+}

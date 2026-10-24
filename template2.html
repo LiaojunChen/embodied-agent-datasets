@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>具身 Agent 训练数据：七个能力方向的数据集与 token 配比</title>
+<meta name="description" content="按 Grounding / Understanding / Identification / WorldModeling / Decision / Agentic / General 七个方向分类的具身 Agent 训练数据集、token 统计与按 token 配比的数据合集版本">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface-1: #fcfcfb; --surface-2: #f3f2ef;
+  --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #6b6a65;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --accent: #2a78d6; --accent-ink: #1c5cab;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4; --s6: #008300; --s7: #4a3aa7; --s8: #e34948;
+  --track: #e8e7e2;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface-1: #1a1a19; --surface-2: #232321;
+    --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #9a9890;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --accent: #3987e5; --accent-ink: #86b6ef;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767;
+    --track: #2c2c2a;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface-1: #1a1a19; --surface-2: #232321;
+  --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #9a9890;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --accent: #3987e5; --accent-ink: #86b6ef;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767;
+  --track: #2c2c2a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--text-primary);
+  font: 14px/1.55 system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+a { color: var(--accent-ink); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 32px 24px 64px; }
+header h1 { font-size: 26px; margin: 0 0 6px; font-weight: 650; }
+header p { margin: 0; color: var(--text-secondary); max-width: 860px; }
+.topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.btn { font: inherit; color: var(--text-primary); background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+.btn:hover { background: var(--surface-2); }
+nav.toc { display: flex; gap: 16px; margin: 20px 0 0; flex-wrap: wrap; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 24px 0 8px; }
+.tile { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+.tile .label { color: var(--text-secondary); font-size: 13px; }
+.tile .value { font-size: 26px; font-weight: 600; margin-top: 2px; }
+section { margin-top: 40px; }
+section h2 { font-size: 19px; margin: 0 0 4px; font-weight: 650; }
+section > .sub { color: var(--text-secondary); margin: 0 0 16px; }
+.card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--grid); }
+.filters input[type=search] { font: inherit; color: var(--text-primary); background: var(--page); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 10px; min-width: 220px; }
+.chip { font: inherit; font-size: 13px; color: var(--text-secondary); background: transparent; border: 1px solid var(--border);
+  border-radius: 999px; padding: 3px 10px; cursor: pointer; }
+.chip[aria-pressed="true"] { color: var(--text-primary); background: var(--surface-2); border-color: var(--axis); font-weight: 600; }
+.filters label { color: var(--text-secondary); font-size: 13px; display: inline-flex; gap: 6px; align-items: center; }
+.filters select { font: inherit; color: var(--text-primary); background: var(--page); border: 1px solid var(--border); border-radius: 8px; padding: 4px 8px; }
+.count { margin-left: auto; color: var(--text-muted); font-size: 13px; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { font-size: 12px; font-weight: 600; color: var(--text-secondary); white-space: nowrap; position: sticky; top: 0; background: var(--surface-1); }
+th button { all: unset; cursor: pointer; }
+th button:focus-visible { outline: 2px solid var(--accent); }
+th[aria-sort] button::after { content: " ↕"; color: var(--text-muted); }
+th[aria-sort="descending"] button::after { content: " ↓"; color: var(--text-primary); }
+th[aria-sort="ascending"] button::after { content: " ↑"; color: var(--text-primary); }
+tbody tr:hover { background: var(--surface-2); }
+.name { font-weight: 600; }
+.cat { font-size: 12px; color: var(--text-muted); }
+.ids { margin-top: 4px; display: flex; flex-direction: column; gap: 2px; }
+.ids a, .ids span { font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; word-break: break-all; }
+.links { margin-top: 4px; font-size: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+.note { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.stage { display: inline-block; font-size: 11px; font-weight: 600; color: var(--text-secondary); border: 1px solid var(--axis);
+  border-radius: 4px; padding: 0 5px; margin: 0 4px 4px 0; }
+.badge { display: inline-block; font-size: 11px; color: var(--text-secondary); background: var(--surface-2); border-radius: 4px; padding: 0 5px; margin-left: 6px; }
+.metric { min-width: 150px; font-variant-numeric: tabular-nums; }
+.metric .num { display: flex; justify-content: space-between; gap: 8px; }
+.metric .num small { color: var(--text-muted); }
+.bar { height: 8px; background: var(--track); border-radius: 4px; margin-top: 5px; position: relative; }
+.bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; }
+.bar.dl i { background: var(--s1); }
+.bar.lk i { background: var(--s2); }
+.na { color: var(--text-muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--text-secondary); }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.stages { display: grid; gap: 12px; }
+.stagecard { padding: 16px 18px; }
+.stagecard h3 { margin: 0; font-size: 15px; font-weight: 650; }
+.stagecard .meta { color: var(--text-secondary); font-size: 13px; margin: 2px 0 12px; }
+.stack { display: flex; gap: 2px; height: 24px; margin-bottom: 10px; }
+.stack .seg { height: 100%; position: relative; cursor: default; }
+.stack .seg:first-child { border-radius: 4px 0 0 4px; }
+.stack .seg:last-child { border-radius: 0 4px 4px 0; }
+.stack .seg span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; color: #fff; white-space: nowrap; }
+.stack .seg.light span { color: #0b0b0b; }
+.evals { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.evals .card { padding: 14px 16px; }
+.evals h3 { margin: 0 0 4px; font-size: 14px; }
+.evals p { margin: 0; color: var(--text-secondary); }
+#tip { position: fixed; pointer-events: none; z-index: 10; background: var(--surface-1); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-size: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  display: none; max-width: 320px; }
+#tip b { font-weight: 600; }
+footer { margin-top: 48px; color: var(--text-muted); font-size: 12px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.exbtn { font: inherit; font-size: 12px; color: var(--accent-ink); background: transparent; border: 1px solid var(--border);
+  border-radius: 6px; padding: 1px 8px; margin-top: 6px; cursor: pointer; }
+.exbtn:hover { background: var(--surface-2); }
+.exbtn[aria-expanded="true"] { background: var(--surface-2); color: var(--text-primary); }
+tr.exrow > td { background: var(--page); padding: 12px 16px 16px; }
+tr.exrow:hover { background: transparent; }
+.exhead { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
+.kind { font-size: 11px; font-weight: 600; border-radius: 4px; padding: 1px 6px; border: 1px solid var(--axis); color: var(--text-primary); }
+.kind.real::before { content: "✓ "; }
+.kind.ill { border-style: dashed; color: var(--text-secondary); }
+.kind.ill::before { content: "◇ "; }
+.eximgs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.eximgs img { height: 120px; width: auto; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-2); }
+pre.json { margin: 0; max-height: 420px; overflow: auto; background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 12px; font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre-wrap; word-break: break-word; }
+pre.json .k { color: var(--accent-ink); }
+pre.json .s { color: var(--text-primary); }
+pre.json .n { color: var(--text-secondary); font-weight: 600; }
+pre.json .o { color: var(--text-muted); font-style: italic; }
+@media (max-width: 720px) { .wrap { padding: 20px 14px 48px; } header h1 { font-size: 21px; } .count { margin-left: 0; } }
+@media (forced-colors: active) { .bar i, .stack .seg { forced-color-adjust: none; } }
+/* direction slots: fixed categorical order A..G (validated: worst adjacent CVD ΔE 9.1 light / 8.4 dark) */
+:root { --dA: var(--s1); --dB: var(--s2); --dC: var(--s3); --dD: var(--s4); --dE: var(--s5); --dF: var(--s6); --dG: var(--s7); }
+.dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.tax { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.taxcard { padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+.taxcard h3 { margin: 0; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+.taxcard .q { color: var(--text-secondary); font-size: 13px; }
+.taxcard .o { color: var(--text-muted); font-size: 12px; }
+.taxcard .avail { margin-top: 4px; font-size: 13px; color: var(--text-secondary); display: flex; justify-content: space-between; gap: 8px; }
+.taxcard .avail b { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.tab { font: inherit; font-size: 13px; padding: 5px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-1);
+  color: var(--text-secondary); cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--surface-2); color: var(--text-primary); font-weight: 600; border-color: var(--axis); }
+.vdesc { color: var(--text-secondary); margin: 0 0 12px; }
+.vrow { display: grid; grid-template-columns: 170px 1fr 120px; gap: 12px; align-items: start; padding: 12px 16px; border-bottom: 1px solid var(--grid); }
+.vrow:last-child { border-bottom: 0; }
+.vrow .lab { display: flex; flex-direction: column; gap: 2px; padding-top: 2px; }
+.vrow .lab small { color: var(--text-muted); font-size: 12px; }
+.vrow .num { text-align: right; font-variant-numeric: tabular-nums; font-size: 13px; padding-top: 2px; }
+.vrow .num small { display: block; color: var(--text-muted); font-size: 11px; }
+.segbar { display: flex; gap: 2px; height: 22px; background: var(--track); border-radius: 4px; overflow: hidden; }
+.segbar .sg { height: 100%; min-width: 3px; cursor: default; }
+.segbar .gap { flex: 1 1 0; background: repeating-linear-gradient(135deg, transparent 0 5px, var(--axis) 5px 7px); }
+.picks { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--text-secondary); margin-top: 6px; }
+.picks span { display: inline-flex; align-items: center; gap: 5px; }
+.picks b { color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
+.short { color: var(--text-primary); font-size: 12px; margin-top: 6px; }
+.short::before { content: "⚠ "; }
+.vtotal { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; padding: 12px 16px; border-bottom: 1px solid var(--grid); }
+.vtotal .big { font-size: 24px; font-weight: 600; }
+.vtotal a { font-size: 13px; }
+tr.dirhead > td { padding: 16px 12px 8px; background: var(--surface-1); border-bottom: 1px solid var(--grid); }
+tr.dirhead:hover { background: transparent; }
+.dirhead h3 { margin: 0; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+.dirhead .q { color: var(--text-secondary); font-size: 13px; margin-top: 2px; }
+.tok { min-width: 160px; font-variant-numeric: tabular-nums; }
+.tok .tv { display: flex; justify-content: space-between; gap: 8px; }
+.tok small { color: var(--text-muted); }
+.tbar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; background: var(--track); margin-top: 5px; gap: 1px; }
+.tbar i { height: 100%; }
+.tbar i.t { background: var(--s1); }
+.tbar i.v { background: var(--s1); opacity: .4; }
+.pill { display: inline-block; font-size: 11px; font-weight: 600; border-radius: 4px; padding: 0 6px; margin: 0 4px 2px 0; border: 1px solid var(--axis); color: var(--text-primary); }
+.pill.dim { color: var(--text-muted); border-color: var(--grid); font-weight: 500; }
+.pill.new { border-style: dashed; }
+.usedin { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+.usedin span { font-size: 11px; color: var(--text-secondary); background: var(--surface-2); border-radius: 4px; padding: 0 5px; }
+details.method { padding: 14px 18px; }
+details.method summary { cursor: pointer; font-weight: 600; }
+details.method ul { margin: 8px 0 0; padding-left: 18px; color: var(--text-secondary); }
+details.method li { margin: 4px 0; }
+.legend2 { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--text-secondary); margin: 0 0 10px; }
+.legend2 span { display: inline-flex; align-items: center; gap: 6px; }
+.sw2 { width: 18px; height: 10px; border-radius: 2px; display: inline-block; }
+@media (max-width: 720px) { .vrow { grid-template-columns: 1fr; } .vrow .num { text-align: left; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="topbar">
+    <div>
+      <h1>具身 Agent 训练数据：七个能力方向的数据集与 token 配比</h1>
+      <p>按 Grounding、Understanding、Identification、WorldModeling、Decision、Agentic、General 七个方向整理训练数据。每个方向优先排<b>大规模单一来源</b>的数据集（类似 OXE：一个产出方、一种格式，便于统一清洗）。token 按 Qwen3.8 tokenizer 实测估算，并给出按 token 预算配比的数据合集版本。下载量 / like 统计于 <span id="fetched"></span>。</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a class="btn" href="v1.html">上一版清单</a>
+      <button class="btn" id="theme" type="button" aria-label="切换深色/浅色主题">切换主题</button>
+    </div>
+  </div>
+  <nav class="toc" aria-label="目录">
+    <a href="#taxonomy">方向定义</a><a href="#versions">配比版本</a><a href="#catalog">数据集（按方向）</a><a href="#method">统计口径</a>
+  </nav>
+</header>
+
+<div class="tiles" id="tiles"></div>
+
+<section id="taxonomy">
+  <h2>七个能力方向</h2>
+  <p class="sub">方向定义来自数据分类表。每张卡片底部是该方向当前可用的去重后 token 总量，以及其中来自大规模单一来源的占比。</p>
+  <div class="tax" id="tax"></div>
+</section>
+
+<section id="versions">
+  <h2>按 token 配比的数据合集版本</h2>
+  <p class="sub">每个方向按预算从上往下取：单一大源优先，单个数据集最多占该方向的 <span id="capFirst"></span>（首个大源）/ <span id="capOther"></span>（其余）；不足部分依次由下一个数据集补齐，不重复采样。按 token 取用时随机抽样本，不截断单条。每个版本可下载清单（JSON）。</p>
+  <div class="tabs" role="tablist" id="vtabs"></div>
+  <div class="card" id="vpanel" role="tabpanel"></div>
+</section>
+
+<section id="catalog">
+  <h2>数据集（按方向）</h2>
+  <p class="sub">◆ = 大规模单一来源（≥50 万样本或 ≥10 亿 token、一个产出方一种格式），排在各方向最前。token 条：深色为文本，浅色为视觉。点“查看示例”展开一条真实数据。</p>
+  <div class="card">
+    <div class="filters" role="group" aria-label="筛选">
+      <input type="search" id="q" placeholder="搜索名称、HF ID、说明…" aria-label="搜索">
+      <div id="dirs" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+      <label><input type="checkbox" id="onlyCore" checked> 只看计入配比的</label>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th scope="col">数据集</th>
+          <th scope="col">说明</th>
+          <th scope="col">样本数</th>
+          <th scope="col">token（文本 + 视觉）</th>
+          <th scope="col">累计下载</th>
+          <th scope="col">Likes</th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="method">
+  <h2>统计口径</h2>
+  <div class="card"><details class="method" open>
+    <summary>token 是怎么数的</summary>
+    <ul>
+      <li>文本 token：用 Qwen3.8 tokenizer 对每条样本的可训练字段计数，即对话、工具定义、任务描述和答案。元数据、ID、URL、哈希、质量评分、连续动作 / 状态数组不计；浮点数按 4 位有效数字计。</li>
+      <li>抽样方式：每个文件抽约 400 条，覆盖文件的多个位置。parquet 读多个 row group，且不读图像列；json / jsonl 在 16 个位置做 HTTP 区间读取。条目内其余文件按字节外推。多子集的大仓库（FineVision、MolmoAct、EO-Data 等）每个子集至少测 1 个文件，再用 HF /size 接口的精确行数放大。</li>
+      <li>视觉 token：<span id="vtokRule"></span>。每个数据集按实测分辨率估算单张成本，如 OXE 帧约 64–106、手机截图 1024、EO-Data 帧 90。</li>
+      <li>去重：同一批数据的多种渲染只计一份，例如 Aguvis l1/l2/l3、Toucan 的 Kimi-K2 / OSS、Cosmos robovqa_reasoning_1–4、OpenResearcher 的 16 个 seed、CoderForge 的 filtered_reward1。被其他合集完整包含的条目标为“已包含”，不计入配比。</li>
+      <li>gated 数据集（xLAM、MiroVerse、UGround）无法直接读取，按 card / 论文估算，页面标为“估算”。</li>
+      <li>样本数：parquet 来自文件元数据或 HF /size 接口，是精确值；大 json 文件用字节数除以平均单条字节数估算。</li>
+      <li>误差：大多数条目在 ±15% 内。长度分布极不均匀的条目误差更大，例如 SWE-rebench CodeWorldModeling：按行数估约 147B、按字节估约 223B，页面取前者。</li>
+    </ul>
+  </details></div>
+</section>
+
+<footer>数据来源：Hugging Face Hub API 与 datasets-server · 下载量统计 <span id="fetched2"></span> · 页面生成 <span id="built"></span> · 由 build2.py 生成</footer>
+</div>
+<div id="tip" role="tooltip"></div>
+<script id="payload" type="application/json">/*__DATA__*/null</script>
+<script>
+const D = JSON.parse(document.getElementById('payload').textContent);
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const DIR = Object.fromEntries(D.directions.map(d => [d.id, d]));
+const dcol = id => `var(--d${id})`;
+function fmt(n) {
+  if (n == null) return '—';
+  if (n >= 1e8) return (n / 1e8).toFixed(n >= 1e9 ? 0 : 1).replace(/\.0$/, '') + ' 亿';
+  if (n >= 1e4) return (n / 1e4).toFixed(n >= 1e5 ? 0 : 1).replace(/\.0$/, '') + ' 万';
+  return n.toLocaleString('en-US');
+}
+function ftok(n) {  // token amounts in B / M
+  if (n == null) return '—';
+  if (n >= 1e9) return (n / 1e9).toFixed(n >= 1e10 ? 0 : (n >= 1e9 * 3 ? 1 : 2)).replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '') + 'B';
+  if (n >= 1e6) return (n / 1e6).toFixed(n >= 1e8 ? 0 : 1).replace(/\.0$/, '') + 'M';
+  if (n >= 1e3) return (n / 1e3).toFixed(0) + 'K';
+  return String(n);
+}
+const pct = x => (x * 100 >= 10 ? (x * 100).toFixed(0) : (x * 100).toFixed(1)) + '%';
+$('#fetched').textContent = $('#fetched2').textContent = D.fetchedAt;
+$('#built').textContent = D.builtAt;
+$('#vtokRule').textContent = D.vtok_rule;
+$('#capFirst').textContent = pct(D.caps.first);
+$('#capOther').textContent = pct(D.caps.other);
+
+const core = D.entries.filter(e => e.tier === 'core');
+const full = D.versions.find(v => v.id === 'full');
+const availBy = Object.fromEntries(full.dirs.map(d => [d.dir, d]));
+const singleShare = id => {
+  const d = availBy[id]; if (!d || !d.got) return 0;
+  return d.picks.filter(p => p.single).reduce((s, p) => s + p.take, 0) / d.got;
+};
+const ENT = Object.fromEntries(D.entries.map(e => [e.key, e]));
+function domainMix(id) {
+  const d = availBy[id]; if (!d || !d.got) return '';
+  const by = {};
+  d.picks.forEach(p => { const dm = ENT[p.key]?.domain || 'other'; by[dm] = (by[dm] || 0) + p.take; });
+  return '来源：' + Object.entries(by).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${esc(D.domains[k] || k)} ${pct(v / d.got)}`).join(' · ');
+}
+$('#tiles').innerHTML = [
+  ['能力方向', D.directions.length],
+  ['数据集条目（计入配比）', core.length],
+  ['其中大规模单一来源', core.filter(e => e.single).length],
+  ['去重后可用 token', ftok(full.total)],
+  ['配比版本', D.versions.length],
+].map(([l, v]) => `<div class="tile"><div class="label">${l}</div><div class="value">${v}</div></div>`).join('');
+
+$('#tax').innerHTML = D.directions.map(d => `<div class="card taxcard">
+  <h3><i class="dot" style="background:${dcol(d.id)}"></i>${d.id} · ${esc(d.en)} <span style="font-weight:500;color:var(--text-secondary)">${esc(d.zh)}</span></h3>
+  <div class="q">${esc(d.q)}</div><div class="o">典型输出：${esc(d.out)}</div>
+  <div class="avail"><span>可用 <b>${ftok(availBy[d.id]?.got)}</b> token</span><span>单一大源占 <b>${pct(singleShare(d.id))}</b></span></div>
+  <div class="o">${domainMix(d.id)}</div>
+</div>`).join('');
+// ---------------------------------------------------------------- versions
+// Inside a direction bar, segments are the picked datasets in fill order: single-source sets in the
+// direction colour, the rest in the same colour at lower opacity, so identity never depends on hue alone
+// (each segment also carries its name in the list below and in the tooltip).
+let curV = 'v1b';
+$('#vtabs').innerHTML = D.versions.map(v => `<button class="tab" role="tab" type="button" data-v="${v.id}" aria-selected="${v.id === curV}">${esc(v.name)}</button>`).join('');
+$('#vtabs').addEventListener('click', e => {
+  const b = e.target.closest('[data-v]'); if (!b) return;
+  curV = b.dataset.v;
+  document.querySelectorAll('#vtabs .tab').forEach(t => t.setAttribute('aria-selected', t === b));
+  renderVersion();
+});
+function renderVersion() {
+  const v = D.versions.find(x => x.id === curV);
+  const scale = v.id === 'full' ? Math.max(...v.dirs.map(d => d.got)) : Math.max(...v.dirs.map(d => d.budget));
+  const shortDirs = v.dirs.filter(d => d.short > 0);
+  const rows = v.dirs.map(d => {
+    const dd = DIR[d.dir];
+    const w = x => (x / scale * 100).toFixed(3) + '%';
+    const segs = d.picks.map((p, i) => `<div class="sg" style="width:${w(p.take)};background:${dcol(d.dir)};opacity:${p.single ? 1 : 0.5}"
+        data-tip="${esc(`${d.dir} · ${p.name}\n${ftok(p.take)} token（文本 ${ftok(p.text)} + 视觉 ${ftok(p.vis)}）\n取该数据集的 ${pct(p.frac)}${p.estimated ? '\n（gated，按 card 估算）' : ''}`)}"></div>`).join('');
+    const gap = d.short > 0 ? `<div class="gap" style="flex:0 0 ${w(d.short)}" data-tip="${esc(`${d.dir} 缺口 ${ftok(d.short)}：该方向现有数据不足预算`)}"></div>` : '';
+    const picks = d.picks.map(p => `<span><i class="dot" style="background:${dcol(d.dir)};opacity:${p.single ? 1 : 0.5}"></i>${p.single ? '◆ ' : ''}${esc(p.name)} <b>${ftok(p.take)}</b>${p.frac < 0.999 ? ` <small>(${pct(p.frac)})</small>` : ''}</span>`).join('');
+    return `<div class="vrow">
+      <div class="lab"><span style="display:flex;align-items:center;gap:6px;font-weight:600"><i class="dot" style="background:${dcol(d.dir)}"></i>${d.dir} · ${esc(dd.en)}</span><small>${esc(dd.zh)}</small></div>
+      <div><div class="segbar" role="img" aria-label="${esc(`${d.dir} ${dd.en}：${d.picks.map(p => p.name + ' ' + ftok(p.take)).join('，')}`)}">${segs}${gap}</div>
+        <div class="picks">${picks}</div>
+        ${d.short > 0 ? `<div class="short">缺口 ${ftok(d.short)}：该方向去重后只有 ${ftok(d.avail)}，未重复采样补齐</div>` : ''}</div>
+      <div class="num">${ftok(d.got)}${v.id === 'full' ? '' : ` / ${ftok(d.budget)}`}<small>${d.picks.length} 个数据集</small></div>
+    </div>`;
+  }).join('');
+  $('#vpanel').innerHTML = `<div class="vtotal"><span class="big">${ftok(v.total)}</span>
+      <span style="color:var(--text-secondary)">${v.id === 'full' ? '去重后全部可计 token' : `目标 ${ftok(v.budget)}${shortDirs.length ? `，${shortDirs.map(d => d.dir).join(' / ')} 有缺口` : '，各方向均已满足'}`}</span>
+      <a href="mixes/${v.id}.json" download>下载清单 JSON</a></div>
+    <div style="padding:10px 16px 0"><p class="vdesc">${esc(v.desc)}</p>
+    <div class="legend2"><span><i class="sw2" style="background:var(--text-secondary)"></i>◆ 大规模单一来源</span>
+      <span><i class="sw2" style="background:var(--text-secondary);opacity:.5"></i>其他数据集</span>
+      <span><i class="sw2" style="background:repeating-linear-gradient(135deg,transparent 0 5px,var(--axis) 5px 7px);border:1px solid var(--axis)"></i>缺口</span></div></div>
+    ${rows}`;
+}
+renderVersion();
+// ---------------------------------------------------------------- catalog by direction
+function hlJSON(v) {
+  const src = JSON.stringify(v, null, 2);
+  const re = /("(?:\\.|[^"\\])*")(\s*:)?|\b(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|true|false|null)\b/g;
+  let out = '', last = 0, m;
+  while ((m = re.exec(src))) {
+    out += esc(src.slice(last, m.index));
+    if (m[1]) {
+      const cls = m[2] ? 'k' : (m[1].startsWith('"…（') ? 'o' : 's');
+      out += `<span class="${cls}">${esc(m[1])}</span>${m[2] || ''}`;
+    } else out += `<span class="n">${m[3]}</span>`;
+    last = re.lastIndex;
+  }
+  return out + esc(src.slice(last));
+}
+function samplePanel(e) {
+  const s = e.sample;
+  if (!s) return '<span class="na">暂无示例</span>';
+  const real = s.kind !== 'illustrative';
+  const how = {viewer: 'HF Dataset Viewer', file: '仓库原始文件'}[s.kind] || '';
+  const head = real
+    ? `<span class="kind real">真实样例</span><span>${esc(how)}：${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.source)}</a>` : esc(s.source)}</span>`
+    : `<span class="kind ill">格式示意（非原始数据）</span><span>${esc(s.source)}</span>`;
+  const imgs = s.images && s.images.length ? `<div class="eximgs">${s.images.map((u, i) => `<img src="${esc(u)}" alt="${esc(e.name)} 样例图像 ${i + 1}" loading="lazy">`).join('')}</div>` : '';
+  return `<div class="exhead">${head}<span>· 长字段已截断，长列表保留首尾各 3 项</span></div>${imgs}<pre class="json" tabindex="0" aria-label="${esc(e.name)} 样例 JSON">${hlJSON(s.record)}</pre>`;
+}
+const TIER = {dup: '已包含在其他条目', ref: '参考 / 不计入', rl: 'RL 任务（非 SFT token）', eval: '评测集'};
+const maxTok = Math.max(...D.entries.filter(e => e.tokens).map(e => e.tokens.total));
+const maxDl = Math.max(1, ...D.entries.filter(e => e.agg).map(e => e.agg.downloadsAllTime));
+const logW = (v, max, floor) => v > 0 ? Math.max(2, (Math.log10(Math.max(v, floor)) - Math.log10(floor)) / (Math.log10(max) - Math.log10(floor)) * 98 + 2) : 0;
+const st = {q: '', dir: '', onlyCore: true};
+const open = new Set();
+$('#dirs').innerHTML = [['', '全部']].concat(D.directions.map(d => [d.id, `${d.id} ${d.en}`]))
+  .map(([id, n]) => `<button class="chip" type="button" data-dir="${id}" aria-pressed="${id === ''}">${id ? `<i class="dot" style="background:${dcol(id)};margin-right:5px"></i>` : ''}${esc(n)}</button>`).join('');
+$('#dirs').addEventListener('click', ev => {
+  const b = ev.target.closest('[data-dir]'); if (!b) return;
+  st.dir = b.dataset.dir;
+  document.querySelectorAll('#dirs .chip').forEach(c => c.setAttribute('aria-pressed', c === b));
+  renderCatalog();
+});
+$('#q').addEventListener('input', ev => { st.q = ev.target.value.trim().toLowerCase(); renderCatalog(); });
+$('#onlyCore').addEventListener('change', ev => { st.onlyCore = ev.target.checked; renderCatalog(); });
+$('#rows').addEventListener('click', ev => {
+  const b = ev.target.closest('.exbtn'); if (!b) return;
+  const k = b.dataset.key;
+  open.has(k) ? open.delete(k) : open.add(k);
+  renderCatalog();
+  document.querySelector(`.exbtn[data-key="${CSS.escape(k)}"]`)?.focus();
+});
+function entryRow(e) {
+  const t = e.tokens;
+  const used = Object.entries(e.used).filter(([v]) => v !== 'full')
+    .map(([v, n]) => `<span>${esc(D.versions.find(x => x.id === v).name.split('（')[0])} ${ftok(n)}</span>`).join('');
+  const tokCell = t ? `<td class="tok" data-tip="${esc(`${e.name}\n文本 ${t.text.toLocaleString('en-US')} token\n视觉 ${t.vis.toLocaleString('en-US')} token（${fmt(t.images)} 图 × ${e.vtok.image ?? 0} + ${fmt(t.videos)} 段视频 × ${e.vtok.video ?? 0}）${t.estimated ? '\n估算：' + (t.basis || '') : ''}${t.files ? `\n实测 ${t.measured} / ${t.files} 个文件` : ''}`)}">
+      <div class="tv"><span>${ftok(t.total)}${t.estimated ? ' <small>估算</small>' : ''}</span><small>文本 ${ftok(t.text)}</small></div>
+      <div class="tbar" aria-hidden="true" style="width:${logW(t.total, maxTok, 1e6)}%"><i class="t" style="flex:${t.text}"></i><i class="v" style="flex:${t.vis}"></i></div></td>`
+    : `<td class="tok"><span class="na">未统计</span></td>`;
+  const ag = e.agg;
+  return `<tr>
+    <td style="min-width:250px">
+      <div class="name">${e.single ? '<span class="pill">◆ 单一大源</span>' : ''}${e.new ? '<span class="pill new">新增</span>' : ''}${e.tier !== 'core' ? `<span class="pill dim">${esc(TIER[e.tier])}</span>` : ''}${ag && ag.gated ? '<span class="pill dim">gated</span>' : ''}</div>
+      <div class="name" style="margin-top:2px">${esc(e.name)}</div>
+      <div class="cat">${esc(D.domains[e.domain] || '')}</div>
+      ${e.also.length ? `<div class="cat">兼顾 ${e.also.map(a => `${a} ${esc(DIR[a].en)}`).join('、')}</div>` : ''}
+      <div class="ids">${e.hf.map(h => `<a href="https://huggingface.co/datasets/${esc(h.id)}" target="_blank" rel="noopener">${esc(h.id)}</a>`).join('')}</div>
+      ${e.links.length ? `<div class="links">${e.links.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join('')}</div>` : ''}
+      ${e.sample ? `<button class="exbtn" type="button" data-key="${esc(e.key)}" aria-expanded="${open.has(e.key)}">${open.has(e.key) ? '收起示例' : '查看示例'}${e.sample.kind === 'illustrative' ? '（示意）' : ''}</button>` : ''}
+    </td>
+    <td style="min-width:220px">${esc(e.role)}${e.note ? `<div class="note">${esc(e.note)}</div>` : ''}${ag && ag.license ? `<div class="note">许可：${esc(ag.license)}</div>` : ''}${used ? `<div class="usedin">${used}</div>` : ''}</td>
+    <td style="font-variant-numeric:tabular-nums;white-space:nowrap">${t ? fmt(t.records) : '—'}${t && !t.exact_records && !t.estimated ? '<div class="note">按字节估</div>' : ''}</td>
+    ${tokCell}
+    <td class="metric">${ag ? `<div class="num"><span>${fmt(ag.downloadsAllTime)}</span></div><div class="bar dl" aria-hidden="true"><i style="width:${logW(ag.downloadsAllTime, maxDl, 100)}%"></i></div>` : '<span class="na">—</span>'}</td>
+    <td style="font-variant-numeric:tabular-nums">${ag ? fmt(ag.likes) : '—'}</td>
+  </tr>${open.has(e.key) ? `<tr class="exrow"><td colspan="6">${samplePanel(e)}</td></tr>` : ''}`;
+}
+function renderCatalog() {
+  const match = e => (!st.onlyCore || e.tier === 'core') && (!st.dir || e.dir === st.dir) &&
+    (!st.q || [e.name, e.role, e.note, ...e.hf.map(h => h.id)].join(' ').toLowerCase().includes(st.q));
+  const list = D.entries.filter(match);
+  $('#count').textContent = `显示 ${list.length} / ${D.entries.length}`;
+  const html = D.directions.map(d => {
+    const items = list.filter(e => e.dir === d.id)
+      .sort((a, b) => (b.single - a.single) || (a.tier === 'core' ? 0 : 1) - (b.tier === 'core' ? 0 : 1) || a.priority - b.priority || (b.tokens?.total || 0) - (a.tokens?.total || 0));
+    if (!items.length) return '';
+    return `<tr class="dirhead"><td colspan="6"><div class="dirhead"><h3><i class="dot" style="background:${dcol(d.id)}"></i>${d.id} · ${esc(d.en)} · ${esc(d.zh)}
+        <span style="font-weight:500;font-size:13px;color:var(--text-secondary)">可用 ${ftok(availBy[d.id]?.got)} token · ${items.length} 个条目</span></h3>
+        <div class="q">${esc(d.q)} 输出：${esc(d.out)}</div></div></td></tr>` + items.map(entryRow).join('');
+  }).join('');
+  $('#rows').innerHTML = html || '<tr><td colspan="6" class="na">没有匹配的数据集</td></tr>';
+}
+renderCatalog();
+
+// ---------------------------------------------------------------- tooltip + theme
+const tip = $('#tip');
+function showTip(el, x, y) {
+  tip.innerHTML = esc(el.dataset.tip).replace(/\n/g, '<br>').replace(/^([^\n]+)/, '<b>$1</b>');
+  tip.style.display = 'block';
+  const r = tip.getBoundingClientRect();
+  tip.style.left = Math.min(x + 14, innerWidth - r.width - 8) + 'px';
+  tip.style.top = Math.min(y + 14, innerHeight - r.height - 8) + 'px';
+}
+document.addEventListener('mousemove', ev => {
+  const el = ev.target.closest('[data-tip]');
+  el ? showTip(el, ev.clientX, ev.clientY) : (tip.style.display = 'none');
+});
+document.addEventListener('focusin', ev => {
+  const el = ev.target.closest('[data-tip]'); if (!el) return;
+  const r = el.getBoundingClientRect(); showTip(el, r.left, r.bottom);
+});
+document.addEventListener('focusout', () => { tip.style.display = 'none'; });
+const saved = localStorage.getItem('theme');
+if (saved) document.documentElement.dataset.theme = saved;
+$('#theme').addEventListener('click', () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next; localStorage.setItem('theme', next);
+});
+</script>
+</body>
+</html>
